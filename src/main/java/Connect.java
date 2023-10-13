@@ -19,7 +19,7 @@ public class Connect{
         {
             System.out.println("Connection failed " + e.getMessage() + "\n");
             e.printStackTrace();
-        }
+        }//test2
 
     }
 
