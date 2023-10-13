@@ -4,9 +4,6 @@ public class Connect{
 
     public static void main(String[] args){
 
-
-    
-
     	Connection con = null;
 	    //mdp : Ohv3uz6x  
 	    //Nom de la base de données : projet_gei_31
@@ -15,15 +12,15 @@ public class Connect{
 	    String user = "projet_gei_031";
 	    String password = "Ohv3uz6x";
 	
-	        try {
-	            con = DriverManager.getConnection(url,user,password);
-	            System.out.println("Connected successfully\n");
-	        }
-	        catch (SQLException e)
-	        {
-	            System.out.println("Connection failed " + e.getMessage() + "\n");
-	            e.printStackTrace();
-	        }
+       try {
+            con = DriverManager.getConnection(url,user,password);
+            System.out.println("Connected successfully\n");
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Connection failed " + e.getMessage() + "\n");
+            e.printStackTrace();
+        }
 
 
     }

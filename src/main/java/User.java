@@ -13,4 +13,5 @@ public class User {
     public void SignUp() {
         // Addition to database
     }
+    
 }
