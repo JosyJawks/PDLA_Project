@@ -1,37 +1,39 @@
-//créer 2 interfaces pour application java
-// Date: 24/10/2019
-
-//une interface Client et une interface Volunteer
-//Le client peut créer des missions (via un Form) et le Volunteer peut les voir et en accepter
-//Le client peut voir les missions qu'il a créé et les modifier
-//Le Volunteer peut voir les missions qu'il a accepté et les modifier
-
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MissionApp {
 
     private JFrame frame;
     private JTextField objectifTextField;
     private JTextField lieuTextField;
-
+    private JTextField dateMissionTextField;
+    
     public MissionApp() {
         frame = new JFrame("Gestion des Missions");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 200);
+        frame.setSize(500, 200);
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 2));
+        panel.setLayout(new GridLayout(6, 2));
 
         JLabel objectifLabel = new JLabel("Objectif:");
         objectifTextField = new JTextField();
 
         JLabel lieuLabel = new JLabel("Lieu:");
         lieuTextField = new JTextField();
+        
+        JLabel dateMissionLabel = new JLabel("Date de la mission:");
+        dateMissionTextField = new JTextField();
+        
+        JLabel dateCreationLabel = new JLabel("Date de création de la mission:");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        Date currentDate = new Date();
+        dateCreationLabel.setText(dateFormat.format(currentDate));
+
 
         JButton creerMissionButton = new JButton("Créer Mission");
         creerMissionButton.addActionListener(new ActionListener() {
@@ -45,6 +47,9 @@ public class MissionApp {
         panel.add(objectifTextField);
         panel.add(lieuLabel);
         panel.add(lieuTextField);
+        panel.add(dateMissionLabel);
+        panel.add(dateMissionTextField);
+        panel.add(dateCreationLabel);
         panel.add(new JLabel());
         panel.add(creerMissionButton);
 
