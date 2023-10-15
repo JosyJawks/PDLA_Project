@@ -86,13 +86,10 @@ public class User {
     	} catch (IOException e) {
     		e.printStackTrace();
     	}
-    	
-    	
-    	//Database.Connect(); 
-    	// Addition to database
-    	
+   
     	
     }
+    
     
     public static void main(String[] args) throws IOException {
     	SignUp();

@@ -62,11 +62,11 @@ public class Database {
 		try(Statement stmt = con.createStatement();)
 		{
 			String sql = "CREATE TABLE IF NOT EXISTS Missions (\n"
-					+ "		id integer PRIMARY KEY, \n"
+					+ "		id int AUTO_INCREMENT PRIMARY KEY, \n"
 					+ "		objective text NOT NULL, \n"
 					+ "		location text NOT NULL, \n"
 					+ "     creationDate text NOT NULL, \n"
-					+ "     missionDate text NOT NULL, \n"
+					+ "     missionDate text NOT NULL\n"
 					+ ");";
 			stmt.executeUpdate(sql);
 			System.out.println("Missions table created successfully\n");
@@ -85,7 +85,7 @@ public class Database {
 	
 	public static void main(String[] args) {
 		createUserTable();
-		//createMissionTable();
+		createMissionTable();
 	}
 
 }
