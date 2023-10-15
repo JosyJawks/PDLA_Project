@@ -2,10 +2,10 @@ import java.sql.*;
 
 public class Database {
 	
-	static Connection con = null;
+ 
 	
-	public static void Connect() {
-		
+	public static Connection Connect() {
+		Connection con = null;
 		
 	    //mdp : Ohv3uz6x  
 	    //Nom de la base de données : projet_gei_31
@@ -16,22 +16,26 @@ public class Database {
 	
        try {
             con = DriverManager.getConnection(url,user,password);
-            System.out.println("Connected successfully\n");
+            System.out.println("Connected successfully to database\n");
+            
         }
         catch (SQLException e)
         {
             System.out.println("Connection failed " + e.getMessage() + "\n");
             e.printStackTrace();
         }
+       
+       return con;
 	}
 
 	
 	
 	public static void createUserTable() {
+		Connection con = Connect();
 		try(Statement stmt = con.createStatement();)
 		{
 			String sql = "CREATE TABLE IF NOT EXISTS Users (\n"
-					+ "		id integer PRIMARY KEY, \n"
+					+ "		id int AUTO_INCREMENT PRIMARY KEY, \n"
 					+ "		name text NOT NULL, \n"
 					+ "		surname text NOT NULL, \n"
 					+ "     email text NOT NULL, \n"
@@ -39,17 +43,25 @@ public class Database {
 					+ "     type text NOT NULL\n"
 					+ ");";
 			stmt.executeUpdate(sql);
-			System.out.println("User table created successfully\n");
+			System.out.println("Users table created successfully\n");
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
+	
 	public static void createMissionTable() {
+		Connection con = Connect();
 		try(Statement stmt = con.createStatement();)
 		{
-			String sql = "CREATE TABLE IF NOT EXISTS Users (\n"
+			String sql = "CREATE TABLE IF NOT EXISTS Missions (\n"
 					+ "		id integer PRIMARY KEY, \n"
 					+ "		objective text NOT NULL, \n"
 					+ "		location text NOT NULL, \n"
@@ -57,18 +69,23 @@ public class Database {
 					+ "     missionDate text NOT NULL, \n"
 					+ ");";
 			stmt.executeUpdate(sql);
-			System.out.println("Mission table created successfully\n");
+			System.out.println("Missions table created successfully\n");
+			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Connect();
 		createUserTable();
-		createMissionTable();
+		//createMissionTable();
 	}
 
 }
