@@ -1,3 +1,4 @@
+package Model;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -5,9 +6,9 @@ import java.sql.*;
 
 public class User {
     
-    private String name;
-    private String surname;
-    private String email;
+    protected String name;
+    protected String surname;
+    protected String email;
 
     public User(String name, String surname, String email) {
     	this.name = name;
@@ -91,7 +92,7 @@ public class User {
     }
     
     
-    public static void main(String[] args) throws IOException {
+    public void main(String[] args) throws IOException {
     	SignUp();
     }
     

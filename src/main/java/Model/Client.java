@@ -1,3 +1,4 @@
+package Model;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,17 +9,19 @@ import java.sql.SQLException;
 public class Client extends User{
 	
 	private String request; //To be changed with type Mission
+
 	
 	public Client (String name, String surname, String email) {
 		super(name,surname,email);
 	}
 	
 	
-	public static void addMission() throws IOException{
+	public void addMission() throws IOException{
     	
     	try {
 	    	BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	    	
+	    	String client = this.name + " " + this.surname;
 	    	// Ask client for mission's objective, location and date
 	    	System.out.println("Objective : ");
 	    	String objective = reader.readLine();
@@ -41,14 +44,15 @@ public class Client extends User{
 	    		Connection con = null;
 	    		
 	    		//TO DO : Find how to insert current date in creationDate row
-	    		String sql ="INSERT INTO Missions (objective, location, missionDate) VALUES (?,?,?);";
+	    		String sql ="INSERT INTO Missions (client, objective, location, missionDate) VALUES (?,?,?,?);";
 	    		
 	    		con = Database.Connect();
 	    		
 	    		try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-	    			pstmt.setString(1,objective);
-	    			pstmt.setString(2,location);
-	    			pstmt.setString(3,missionDate);
+	    			pstmt.setString(1,client);
+	    			pstmt.setString(2,objective);
+	    			pstmt.setString(3,location);
+	    			pstmt.setString(4,missionDate);
 
 	    			pstmt.executeUpdate();
 	    			System.out.println("Mission added successfully\n");
@@ -68,7 +72,7 @@ public class Client extends User{
     	
     }
 	
-	public static void main(String[] args) throws IOException{
+	public void main(String[] args) throws IOException{
 		addMission();
 	}
 

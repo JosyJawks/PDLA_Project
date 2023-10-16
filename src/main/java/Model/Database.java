@@ -1,3 +1,4 @@
+package Model;
 import java.sql.*;
 
 public class Database {
@@ -63,9 +64,10 @@ public class Database {
 		{
 			String sql = "CREATE TABLE IF NOT EXISTS Missions (\n"
 					+ "		id int AUTO_INCREMENT PRIMARY KEY, \n"
+					+ "     client text NOT NULL, \n"
 					+ "		objective text NOT NULL, \n"
 					+ "		location text NOT NULL, \n"
-					+ "     creationDate text NOT NULL, \n"
+					+ "     creationDate datetime default now(), \n"
 					+ "     missionDate text NOT NULL\n"
 					+ ");";
 			stmt.executeUpdate(sql);
