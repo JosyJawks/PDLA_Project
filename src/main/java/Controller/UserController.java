@@ -12,7 +12,7 @@ import Model.Database;
 
 public class UserController {
 
-	
+	//test
 	public User createUser(String name, String surname, String email, String password, String type) {
 		User U = new User();
 		U.setName(name);

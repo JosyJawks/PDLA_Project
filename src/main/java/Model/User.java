@@ -1,7 +1,7 @@
 package Model;
 
 public class User {
-    
+    //test
     private String name;
     private String surname;
     private String email;
