@@ -11,9 +11,9 @@ public class Client extends User{
 	private String request; //To be changed with type Mission
 
 	
-	public Client (String name, String surname, String email) {
+	/*public Client (String name, String surname, String email) {
 		super(name,surname,email);
-	}
+	}*/
 	
 	
 	public void addMission() throws IOException{
@@ -21,7 +21,7 @@ public class Client extends User{
     	try {
 	    	BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	    	
-	    	String client = this.name + " " + this.surname;
+	    	String client = this.getName() + " " + this.getSurname();
 	    	// Ask client for mission's objective, location and date
 	    	System.out.println("Objective : ");
 	    	String objective = reader.readLine();
