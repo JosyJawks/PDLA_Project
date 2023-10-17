@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 //name surname email Client/Volunteer password confirm_password 
 
-public class SignUpAppp {
+public class SignUpApp {
 
     private JFrame frame;
     private JTextField nameTextField;
@@ -17,7 +17,7 @@ public class SignUpAppp {
     private JTextField passwordTextField;
     private JTextField cpasswordTextField;
     
-    public SignUpAppp() {
+    public SignUpApp() {
         frame = new JFrame("Sign Up");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 300);
@@ -84,12 +84,12 @@ public class SignUpAppp {
     }
 
     public static void main(String[] args) {
-    	System.out.println("*****");
-        /*SwingUtilities.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() {
             @Override
            public void run() {
                 new SignUpApp();
-            
-        });*/
+           }
+        });
     }
+    
 }
