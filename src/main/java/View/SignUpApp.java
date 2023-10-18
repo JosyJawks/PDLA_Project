@@ -14,7 +14,8 @@ public class SignUpApp {
     private JTextField nameTextField;
     private JTextField surnameTextField;
     private JTextField emailTextField;
-    private JTextField typeTextField;
+
+    private String typeTextField;
     private JTextField passwordTextField;
     private JTextField cpasswordTextField;
     
@@ -36,7 +37,6 @@ public class SignUpApp {
         emailTextField = new JTextField();
 
         JLabel typeLabel = new JLabel("Type:");
-        typeTextField = new JTextField();
 
         JPanel paneltype = new JPanel();
         paneltype.setLayout(new GridLayout(1, 2));
@@ -62,7 +62,10 @@ public class SignUpApp {
         creerSignUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                creerSignUp();
+                if (passwordTextField.getText() == cpasswordLabel.getText()) {
+                    typeTextField = getType(grouptype);
+                    creerSignUp();
+                }
             }
         });
 
@@ -104,11 +107,14 @@ public class SignUpApp {
     }
 
 
-    private void creerSignUp() {
-        //String name = nameTextField.getText();
-
-
-
+    private String[] creerSignUp() {
+        String name = nameTextField.getText();
+        String surname = surnameTextField.getText();
+        String email = emailTextField.getText();
+        String password = passwordTextField.getText();
+        String type = typeTextField;
+        String [] tabUser = {name, surname, email, type, password};
+        return tabUser;
     }
 
     public static void main(String[] args) {
