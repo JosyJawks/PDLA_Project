@@ -1,8 +1,7 @@
 package View;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Enumeration;
 import java.util.Objects;
 
@@ -58,13 +57,10 @@ public class SignUpApp {
         
        
         JButton creerSignUpButton = new JButton("Sign Up");
-        creerSignUpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (Objects.equals(passwordTextField.getText(), cpasswordLabel.getText())) {
-                    typeTextField = getType(grouptype);
-                    creerSignUp();
-                }
+        creerSignUpButton.addActionListener(e -> {
+            if (Objects.equals(passwordTextField.getText(), cpasswordLabel.getText())) {
+                typeTextField = getType(grouptype);
+                creerSignUp();
             }
         });
 
@@ -116,12 +112,7 @@ public class SignUpApp {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-           public void run() {
-                new SignUpApp();
-           }
-        });
+        SwingUtilities.invokeLater(SignUpApp::new);
     }
     
 }
