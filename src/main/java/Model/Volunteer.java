@@ -1,4 +1,4 @@
-package Model;
+/*package Model;
 
 public class Volunteer extends User {
 	
@@ -11,3 +11,4 @@ public class Volunteer extends User {
 		// List all Missions from database
 	}
 }
+*/

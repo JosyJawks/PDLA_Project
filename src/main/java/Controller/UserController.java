@@ -1,4 +1,4 @@
-package Controller;
+/*package Controller;
 
 import Model.User;
 import java.io.BufferedReader;
@@ -54,7 +54,7 @@ public class UserController {
 				System.out.println("This does not correspond to a role (Client or Volunteer)\n");
 				System.out.println("Are you looking for help (Client) or do you want to volunteer (Volunteer) ? : ");
 				type = reader.readLine();
-			}*/
+			}
 			String type = U.getType();
 		
 			//System.out.println("Password : ");
@@ -69,7 +69,7 @@ public class UserController {
 				System.out.println("Confirm Password : \n");
 				confirmPassword = reader.readLine();
 		    	
-			}*/
+			}
 		
 			System.out.println("Do you confirm these informations (y or n) : \n");
 			System.out.println("Name : " + name + "\n");
@@ -108,4 +108,4 @@ public class UserController {
 	   
 	    	
 	 }
-}
+}*/
