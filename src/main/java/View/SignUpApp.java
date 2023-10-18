@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Enumeration;
 
 
 //name surname email Client/Volunteer password confirm_password 
@@ -20,7 +21,7 @@ public class SignUpApp {
     public SignUpApp() {
         frame = new JFrame("Sign Up");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 300);
+        frame.setSize(500, 300);
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(7, 2));
@@ -33,9 +34,22 @@ public class SignUpApp {
         
         JLabel emailLabel = new JLabel("e-mail:");
         emailTextField = new JTextField();
-        
+
         JLabel typeLabel = new JLabel("Type:");
         typeTextField = new JTextField();
+
+        JPanel paneltype = new JPanel();
+        paneltype.setLayout(new GridLayout(1, 2));
+
+        JRadioButton Client = new JRadioButton("Client", true);
+        JRadioButton Volunteer = new JRadioButton("Volunteer", false);
+
+        ButtonGroup grouptype = new ButtonGroup();
+        grouptype.add(Client);
+        grouptype.add(Volunteer);
+
+        paneltype.add(Client);
+        paneltype.add(Volunteer);
         
         JLabel passwordLabel = new JLabel("Password:");
         passwordTextField = new JTextField();
@@ -52,6 +66,8 @@ public class SignUpApp {
             }
         });
 
+
+
         panel.add(nameLabel);
         panel.add(nameTextField);
         panel.add(surnameLabel);
@@ -59,7 +75,7 @@ public class SignUpApp {
         panel.add(emailLabel);
         panel.add(emailTextField);
         panel.add(typeLabel);
-        panel.add(typeTextField);
+        panel.add(paneltype);
         panel.add(passwordLabel);
         panel.add(passwordTextField);
         panel.add(emailLabel);
@@ -75,6 +91,18 @@ public class SignUpApp {
         frame.add(panel);
         frame.setVisible(true);
     }
+
+    public String getType(ButtonGroup grouptype)
+    {
+        for (Enumeration<AbstractButton> buttons = grouptype.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+        return null;
+    }
+
 
     private void creerSignUp() {
         //String name = nameTextField.getText();
