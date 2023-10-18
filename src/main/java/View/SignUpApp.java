@@ -4,23 +4,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
+import java.util.Objects;
 
 
 //name surname email Client/Volunteer password confirm_password 
 
 public class SignUpApp {
-//test
-    private JFrame frame;
-    private JTextField nameTextField;
-    private JTextField surnameTextField;
-    private JTextField emailTextField;
+    private final JTextField nameTextField;
+    private final JTextField surnameTextField;
+    private final JTextField emailTextField;
 
     private String typeTextField;
-    private JTextField passwordTextField;
-    private JTextField cpasswordTextField;
-    
+    private final JTextField passwordTextField;
+
     public SignUpApp() {
-        frame = new JFrame("Sign Up");
+        //test
+        JFrame frame = new JFrame("Sign Up");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 300);
 
@@ -55,14 +54,14 @@ public class SignUpApp {
         passwordTextField = new JTextField();
         
         JLabel cpasswordLabel = new JLabel("Confirm password:");
-        cpasswordTextField = new JTextField();
+        JTextField cpasswordTextField = new JTextField();
         
        
         JButton creerSignUpButton = new JButton("Sign Up");
         creerSignUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (passwordTextField.getText() == cpasswordLabel.getText()) {
+                if (Objects.equals(passwordTextField.getText(), cpasswordLabel.getText())) {
                     typeTextField = getType(grouptype);
                     creerSignUp();
                 }
@@ -107,14 +106,13 @@ public class SignUpApp {
     }
 
 
-    private String[] creerSignUp() {
+    private String [] creerSignUp() {
         String name = nameTextField.getText();
         String surname = surnameTextField.getText();
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
         String type = typeTextField;
-        String [] tabUser = {name, surname, email, type, password};
-        return tabUser;
+        return new String[]{name, surname, email, type, password};
     }
 
     public static void main(String[] args) {
