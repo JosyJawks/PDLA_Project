@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Enumeration;
 import java.util.Objects;
-
+import Controller.UserController;
 
 //name surname email Client/Volunteer password confirm_password 
 
@@ -63,6 +63,7 @@ public class SignUpApp {
             if (Objects.equals(passwordTextField.getText(), cpasswordLabel.getText())) {
                 typeTextField = getType(grouptype);
                 Final=creerSignUp();
+                UserController.SignUp();
             }
         });
 
