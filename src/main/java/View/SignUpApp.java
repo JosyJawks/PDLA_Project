@@ -1,25 +1,24 @@
 package View;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Enumeration;
+import java.util.Objects;
 
 
 //name surname email Client/Volunteer password confirm_password 
 
 public class SignUpApp {
+    private final JTextField nameTextField;
+    private final JTextField surnameTextField;
+    private final JTextField emailTextField;
 
-    private JFrame frame;
-    private JTextField nameTextField;
-    private JTextField surnameTextField;
-    private JTextField emailTextField;
-    private JTextField typeTextField;
-    private JTextField passwordTextField;
-    private JTextField cpasswordTextField;
-    
+    private String typeTextField;
+    private final JTextField passwordTextField;
+
     public SignUpApp() {
-        frame = new JFrame("Sign Up");
+        //test
+        JFrame frame = new JFrame("Sign Up");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 300);
 
@@ -36,7 +35,6 @@ public class SignUpApp {
         emailTextField = new JTextField();
 
         JLabel typeLabel = new JLabel("Type:");
-        typeTextField = new JTextField();
 
         JPanel paneltype = new JPanel();
         paneltype.setLayout(new GridLayout(1, 2));
@@ -55,13 +53,13 @@ public class SignUpApp {
         passwordTextField = new JTextField();
         
         JLabel cpasswordLabel = new JLabel("Confirm password:");
-        cpasswordTextField = new JTextField();
+        JTextField cpasswordTextField = new JTextField();
         
        
         JButton creerSignUpButton = new JButton("Sign Up");
-        creerSignUpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        creerSignUpButton.addActionListener(e -> {
+            if (Objects.equals(passwordTextField.getText(), cpasswordLabel.getText())) {
+                typeTextField = getType(grouptype);
                 creerSignUp();
             }
         });
@@ -104,20 +102,17 @@ public class SignUpApp {
     }
 
 
-    private void creerSignUp() {
-        //String name = nameTextField.getText();
-
-
-
+    private String [] creerSignUp() {
+        String name = nameTextField.getText();
+        String surname = surnameTextField.getText();
+        String email = emailTextField.getText();
+        String password = passwordTextField.getText();
+        String type = typeTextField;
+        return new String[]{name, surname, email, type, password};
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-           public void run() {
-                new SignUpApp();
-           }
-        });
+        SwingUtilities.invokeLater(SignUpApp::new);
     }
     
 }
