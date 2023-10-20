@@ -63,6 +63,7 @@ public class SignUpApp {
             if (Objects.equals(passwordTextField.getText(), cpasswordLabel.getText())) {
                 typeTextField = getType(grouptype);
                 Final=creerSignUp();
+                System.out.println(Final[0]);
                 UserController.SignUp();
             }
         });
