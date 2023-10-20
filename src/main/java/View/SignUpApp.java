@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class SignUpApp {
 
-    private String[] Final;
+    private static String[] Final;
     private final JTextField nameTextField;
     private final JTextField surnameTextField;
     private final JTextField emailTextField;
@@ -117,7 +117,7 @@ public class SignUpApp {
         SwingUtilities.invokeLater(SignUpApp::new);
     }
 
-    public String[] getFinal() {
+    public static String[] getFinal() {
         return Final;
     }
 }

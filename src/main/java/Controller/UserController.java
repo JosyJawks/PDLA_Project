@@ -1,4 +1,4 @@
-/*package Controller;
+package Controller;
 
 import Model.User;
 import java.io.BufferedReader;
@@ -7,12 +7,11 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
+import View.SignUpApp;
 import Model.Database;
 
 public class UserController {
 
-	//test
 	public User createUser(String name, String surname, String email, String password, String type) {
 		User U = new User();
 		U.setName(name);
@@ -24,12 +23,15 @@ public class UserController {
 		return U;
 	}
 	
-	 public static void SignUp(){
+	 public void SignUp(){
 	    	
 		 	// Get Array of data from interface
-		 
+
 		 	//Create user with data
-		 
+            String[] UserData = new String[];
+			UserData = SignUpApp.getFinal();
+		    User U = new User();
+            U = createUser(UserData[0],UserData[1],UserData[2],UserData[3],UserData[5]);
 		 
     	//try {
 	    	//BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -44,24 +46,24 @@ public class UserController {
 			//String surname = reader.readLine();
 			String surname = U.getSurname();
 			
-			//System.out.println("E-mail adress : ");
+			//System.out.println("E-mail address : ");
 			//String email = reader.readLine();
 			String email = U.getEmail();
 			
-			/*System.out.println("Are you looking for help (Client) or do you want to volunteer (Volunteer) ? : ");
-			String type  = reader.readLine();
-			while(!(type.equals("Client") || type.equals("Volunteer"))) {
+			//System.out.println("Are you looking for help (Client) or do you want to volunteer (Volunteer) ? : ");
+			//String type  = reader.readLine();
+			/*while(!(type.equals("Client") || type.equals("Volunteer"))) {
 				System.out.println("This does not correspond to a role (Client or Volunteer)\n");
 				System.out.println("Are you looking for help (Client) or do you want to volunteer (Volunteer) ? : ");
 				type = reader.readLine();
-			}
+			}*/
 			String type = U.getType();
 		
 			//System.out.println("Password : ");
 			//String password = reader.readLine();
 			String password = U.getPassword();
 			
-			/*String confirmPassword = "";
+			String confirmPassword = "";
 			System.out.println("Confirm Password : \n");
 			confirmPassword = reader.readLine();
 			while (!confirmPassword.equals(password)) {
@@ -71,13 +73,13 @@ public class UserController {
 		    	
 			}
 		
-			System.out.println("Do you confirm these informations (y or n) : \n");
+			System.out.println("Do you confirm these information (y or n) : \n");
 			System.out.println("Name : " + name + "\n");
 			System.out.println("Surname : " + surname + "\n");
 			System.out.println("E-mail : " + email + "\n");
 			System.out.println("I want to be seen as a " + type + "\n");
 			
-			//If informations above are confirmed by User
+			//If information above are confirmed by User
 			//if(reader.readLine().equals("y")) {
 				//Addition to database
 			Connection con = null;
@@ -108,4 +110,4 @@ public class UserController {
 	   
 	    	
 	 }
-}*/
+}

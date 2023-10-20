@@ -8,12 +8,6 @@ public class User {
     private String password;
     private String type;
 
-   /* public User(String name, String surname, String email) {
-    	this.name = name;
-    	this.surname = surname;
-    	this.email = email;
-    }*/
-    
     public String getName() {
     	return this.name;
     }
