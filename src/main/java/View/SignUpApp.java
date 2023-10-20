@@ -63,6 +63,7 @@ public class SignUpApp {
             if (Objects.equals(passwordTextField.getText(), cpasswordLabel.getText())) {
                 typeTextField = getType(grouptype);
                 Final=creerSignUp();
+
             }
         });
 
