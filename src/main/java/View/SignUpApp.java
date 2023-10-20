@@ -9,6 +9,8 @@ import java.util.Objects;
 //name surname email Client/Volunteer password confirm_password 
 
 public class SignUpApp {
+
+    private String[] Final;
     private final JTextField nameTextField;
     private final JTextField surnameTextField;
     private final JTextField emailTextField;
@@ -60,7 +62,7 @@ public class SignUpApp {
         creerSignUpButton.addActionListener(e -> {
             if (Objects.equals(passwordTextField.getText(), cpasswordLabel.getText())) {
                 typeTextField = getType(grouptype);
-                creerSignUp();
+                Final=creerSignUp();
             }
         });
 
@@ -114,5 +116,8 @@ public class SignUpApp {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(SignUpApp::new);
     }
-    
+
+    public String[] getFinal() {
+        return Final;
+    }
 }
