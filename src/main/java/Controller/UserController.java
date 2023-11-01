@@ -3,6 +3,7 @@ package Controller;
 import Model.Database;
 import Model.User;
 import View.SignUpApp;
+import View.SignInApp;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -59,7 +60,7 @@ public class UserController {
 	public static void SignIn() {
 
 		// Get Array of data from interface
-		String[] UserData = SignUpApp.getFinal();
+		String[] UserData = SignInApp.getFinal();
 
 		String email = UserData[0];
 		String password = UserData[1];

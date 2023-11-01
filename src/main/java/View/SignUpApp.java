@@ -4,8 +4,6 @@ import Controller.UserController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Enumeration;
 
 public class SignUpApp {
@@ -55,13 +53,10 @@ public class SignUpApp {
         confirmPasswordField = new JPasswordField();
 
         JButton signUpButton = new JButton("Sign Up");
-        signUpButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                typeTextField = getType(groupType);
-                Final = creerSignUp();
-                UserController.SignUp();
-            }
+        signUpButton.addActionListener(e -> {
+            typeTextField = getType(groupType);
+            Final = creerSignUp();
+            UserController.SignUp();
         });
 
         // Create a panel for the button and center it

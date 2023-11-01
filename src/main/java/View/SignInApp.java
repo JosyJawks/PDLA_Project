@@ -4,8 +4,6 @@ import Controller.UserController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class SignInApp {
 
@@ -29,12 +27,9 @@ public class SignInApp {
         passwordField = new JPasswordField();
 
         JButton signInButton = new JButton("Sign In");
-        signInButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Final = creerSignIn();
-                UserController.SignIn();
-            }
+        signInButton.addActionListener(e -> {
+            Final = creerSignIn();
+            UserController.SignIn();
         });
 
         // Create a panel for the button and center it
@@ -62,5 +57,9 @@ public class SignInApp {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(SignInApp::new);
+    }
+
+    public static String[] getFinal() {
+        return Final;
     }
 }
