@@ -1,22 +1,17 @@
 package Model;
-import java.io.BufferedReader;
+/*import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.SQLException;*/
 
 public class Client extends User{
 	
-	private String request; //To be changed with type Mission
+	private Mission request; //To be changed with type Mission
 
 	
-	/*public Client (String name, String surname, String email) {
-		super(name,surname,email);
-	}*/
-	
-	
-	public void addMission() throws IOException{
+	/*public void addMission() throws IOException{
     	
     	try {
 	    	BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -70,10 +65,10 @@ public class Client extends User{
     	}
    
     	
-    }
+    }*/
 	
-	public void main(String[] args) throws IOException{
+	/*public void main(String[] args) throws IOException{
 		addMission();
-	}
+	}*/
 
 }

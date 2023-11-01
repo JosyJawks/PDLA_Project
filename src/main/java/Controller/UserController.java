@@ -2,6 +2,8 @@ package Controller;
 
 import Model.Database;
 import Model.User;
+import Model.Client;
+import Model.Volunteer;
 import View.SignUpApp;
 import View.SignInApp;
 
@@ -12,6 +14,9 @@ import java.sql.SQLException;
 
 public class UserController {
 
+	private static Client connectedClient;
+	private static Volunteer connectedVolunteer;
+
 	public static User createUser(String name, String surname, String email, String password, String type) {
 		User U = new User();
 		U.setName(name);
@@ -21,6 +26,28 @@ public class UserController {
 		U.setType(type);
 
 		return U;
+	}
+
+	public static Client createClient(String name, String surname, String email, String password, String type) {
+		Client C = new Client();
+		C.setName(name);
+		C.setSurname(surname);
+		C.setEmail(email);
+		C.setPassword(password);
+		C.setType(type);
+
+		return C;
+	}
+
+	public static Volunteer createVolunteer(String name, String surname, String email, String password, String type) {
+		Volunteer V = new Volunteer();
+		V.setName(name);
+		V.setSurname(surname);
+		V.setEmail(email);
+		V.setPassword(password);
+		V.setType(type);
+
+		return V;
 	}
 
 	public static void SignUp() {
@@ -80,6 +107,24 @@ public class UserController {
 			if (resultSet.next()) {
 				// User with matching email and password exists in the database
 				System.out.println("Sign in successful\n");
+				// Get User type, return Client or Volunteer
+				if (resultSet.getString("type").equals("Client")) {
+					String nameCli = resultSet.getString("name");
+					String surnameCli = resultSet.getString("surname");
+					String emailCli = resultSet.getString("email");
+					String pwdCli = resultSet.getString("password");
+					String typeCli = "Client";
+					connectedClient = createClient(nameCli,surnameCli,emailCli,pwdCli,typeCli);
+					System.out.println("Connected as " + connectedClient.getName() + " " + connectedClient.getSurname() + " - " + connectedClient.getType() + "\n");
+				} else if (resultSet.getString("type").equals("Volunteer")) {
+					String nameVolunt = resultSet.getString("name");
+					String surnameVolunt = resultSet.getString("surname");
+					String emailVolunt = resultSet.getString("email");
+					String pwdVolunt = resultSet.getString("password");
+					String typeVolunt = "Volunteer";
+					connectedVolunteer = createVolunteer(nameVolunt,surnameVolunt,emailVolunt,pwdVolunt,typeVolunt);
+					System.out.println("Connected as " + nameVolunt + " " + surnameVolunt + " - " + typeVolunt + "\n");
+				}
 			} else {
 				// User does not exist or the credentials are incorrect
 				System.out.println("Sign in failed. Email or password is incorrect.\n");
@@ -90,5 +135,13 @@ public class UserController {
 		}
 
 
+	}
+
+	public static Client getConnectedClient() {
+		return connectedClient;
+	}
+
+	public static Volunteer getConnectedVolunteer() {
+		return connectedVolunteer;
 	}
 }

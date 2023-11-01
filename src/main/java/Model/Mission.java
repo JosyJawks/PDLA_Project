@@ -1,6 +1,8 @@
 package Model;
 
 public class Mission {
+
+    private Client client;
     private String location;
     private String dateMission;
     private String objective;
@@ -8,6 +10,10 @@ public class Mission {
 
 
     // Getters and setters
+    public Client getClient(){ return client; }
+
+    public void setClient(Client cli) { this.client = cli; }
+
     public String getLocation() {
         return location;
     }
