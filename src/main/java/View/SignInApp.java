@@ -1,123 +1,66 @@
 package View;
 
+import Controller.UserController;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.Enumeration;
-import java.util.Objects;
-
-
-//name surname email Client/Volunteer password confirm_password
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SignInApp {
 
     private static String[] Final;
-    private final JTextField nameTextField;
-    private final JTextField surnameTextField;
     private final JTextField emailTextField;
-
-    private String typeTextField;
-    private final JTextField passwordTextField;
+    private final JPasswordField passwordField;
 
     public SignInApp() {
-        //test
-        JFrame frame = new JFrame("Sign Up");
+        JFrame frame = new JFrame("Sign In");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 300);
+        frame.setSize(400, 200);
+        frame.setLocationRelativeTo(null); // Center the frame on the screen
 
         JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(7, 2));
+        panel.setLayout(new GridLayout(3, 2));
 
-        JLabel nameLabel = new JLabel("Name:");
-        nameTextField = new JTextField();
-
-        JLabel surnameLabel = new JLabel("Surname:");
-        surnameTextField = new JTextField();
-
-        JLabel emailLabel = new JLabel("e-mail:");
+        JLabel emailLabel = new JLabel("Email:");
         emailTextField = new JTextField();
 
-        JLabel typeLabel = new JLabel("Type:");
-
-        JPanel paneltype = new JPanel();
-        paneltype.setLayout(new GridLayout(1, 2));
-
-        JRadioButton Client = new JRadioButton("Client", true);
-        JRadioButton Volunteer = new JRadioButton("Volunteer", false);
-
-        ButtonGroup grouptype = new ButtonGroup();
-        grouptype.add(Client);
-        grouptype.add(Volunteer);
-
-        paneltype.add(Client);
-        paneltype.add(Volunteer);
-
         JLabel passwordLabel = new JLabel("Password:");
-        passwordTextField = new JTextField();
+        passwordField = new JPasswordField();
 
-        JLabel cpasswordLabel = new JLabel("Confirm password:");
-        JTextField cpasswordTextField = new JTextField();
-
-
-        JButton creerSignUpButton = new JButton("Sign Up");
-        creerSignUpButton.addActionListener(e -> {
-            if (Objects.equals(passwordTextField.getText(), cpasswordLabel.getText())) {
-                typeTextField = getType(grouptype);
-                Final=creerSignIn();
+        JButton signInButton = new JButton("Sign In");
+        signInButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Final = creerSignIn();
+                UserController.SignIn();
             }
         });
 
+        // Create a panel for the button and center it
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.add(signInButton);
 
-
-        panel.add(nameLabel);
-        panel.add(nameTextField);
-        panel.add(surnameLabel);
-        panel.add(surnameTextField);
-        panel.add(emailLabel);
-        panel.add(emailTextField);
-        panel.add(typeLabel);
-        panel.add(paneltype);
-        panel.add(passwordLabel);
-        panel.add(passwordTextField);
         panel.add(emailLabel);
         panel.add(emailTextField);
         panel.add(passwordLabel);
-        panel.add(passwordTextField);
-        panel.add(cpasswordLabel);
-        panel.add(cpasswordTextField);
+        panel.add(passwordField);
 
-        panel.add(new JLabel());
-        panel.add(creerSignUpButton);
+        panel.add(new JLabel()); // Empty label for spacing
+        panel.add(buttonPanel);
 
         frame.add(panel);
         frame.setVisible(true);
     }
 
-    public String getType(ButtonGroup grouptype)
-    {
-        for (Enumeration<AbstractButton> buttons = grouptype.getElements(); buttons.hasMoreElements();) {
-            AbstractButton button = buttons.nextElement();
-            if (button.isSelected()) {
-                return button.getText();
-            }
-        }
-        return null;
-    }
-
-
-    private String [] creerSignIn() {
-        String name = nameTextField.getText();
-        String surname = surnameTextField.getText();
+    private String[] creerSignIn() {
         String email = emailTextField.getText();
-        String password = passwordTextField.getText();
-        String type = typeTextField;
-        return new String[]{name, surname, email, type, password};
+        char[] passwordChars = passwordField.getPassword();
+        String password = new String(passwordChars);
+        return new String[]{email, password};
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(SignUpApp::new);
-    }
-
-    public static String[] getFinal() {
-        return Final;
+        SwingUtilities.invokeLater(SignInApp::new);
     }
 }
