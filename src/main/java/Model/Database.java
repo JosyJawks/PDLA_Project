@@ -33,7 +33,7 @@ public class Database {
 	
 	public static void createUserTable() {
 		Connection con = Connect();
-		try(Statement stmt = con.createStatement();)
+		try(Statement stmt = con.createStatement())
 		{
 			String sql = "CREATE TABLE IF NOT EXISTS Users (\n"
 					+ "		id int AUTO_INCREMENT PRIMARY KEY, \n"
@@ -45,7 +45,6 @@ public class Database {
 					+ ");";
 			stmt.executeUpdate(sql);
 			System.out.println("Users table created successfully\n");
-			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -60,19 +59,19 @@ public class Database {
 	
 	public static void createMissionTable() {
 		Connection con = Connect();
-		try(Statement stmt = con.createStatement();)
+		try(Statement stmt = con.createStatement())
 		{
 			String sql = "CREATE TABLE IF NOT EXISTS Missions (\n"
 					+ "		id int AUTO_INCREMENT PRIMARY KEY, \n"
 					+ "     client text NOT NULL, \n"
 					+ "		objective text NOT NULL, \n"
 					+ "		location text NOT NULL, \n"
-					+ "     creationDate datetime default now(), \n"
-					+ "     missionDate text NOT NULL\n"
+					+ "     missionDate text NOT NULL, \n"
+					+ "     creationDate text NOT NULL, \n"
+					+ "		status text NOT NULL\n"
 					+ ");";
 			stmt.executeUpdate(sql);
 			System.out.println("Missions table created successfully\n");
-			stmt.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

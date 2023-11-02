@@ -123,7 +123,7 @@ public class UserController {
 					String pwdVolunt = resultSet.getString("password");
 					String typeVolunt = "Volunteer";
 					connectedVolunteer = createVolunteer(nameVolunt,surnameVolunt,emailVolunt,pwdVolunt,typeVolunt);
-					System.out.println("Connected as " + nameVolunt + " " + surnameVolunt + " - " + typeVolunt + "\n");
+					System.out.println("Connected as " + connectedVolunteer.getName() + " " + connectedVolunteer.getSurname() + " - " + connectedVolunteer.getType() + "\n");
 				}
 			} else {
 				// User does not exist or the credentials are incorrect
@@ -133,7 +133,6 @@ public class UserController {
 			System.out.println("Sign in failed " + e.getMessage() + "\n");
 			e.printStackTrace();
 		}
-
 
 	}
 

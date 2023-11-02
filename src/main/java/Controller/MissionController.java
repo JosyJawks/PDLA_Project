@@ -18,6 +18,7 @@ public class MissionController {
         M.setDateMission(dateMission);
         M.setObjective(objective);
         M.setDateCreation(dateCreation);
+        M.setStatus("Pending");
         return M;
     }
 
@@ -34,20 +35,22 @@ public class MissionController {
         String location = M.getLocation();
         String dateMission = M.getDateMission();
         String objective = M.getObjective();
-        //String dateCreation = M.getDateCreation(); --> Not necessary as the table is defined to add autonomously a date in this field
-
+        String dateCreation = M.getDateCreation();
+        String status = M.getStatus();
 
 
         //Addition to database
-        String sql = "INSERT INTO Missions (client, objective, location, missionDate) VALUES (?,?,?,?);";
-        //AJOUTER LE USER QUI CREE LA MISSION!!!!!!!!!
+        String sql = "INSERT INTO Missions (client, objective, location, missionDate, creationDate, status) VALUES (?,?,?,?,?,?);";
+
         Connection con = Database.Connect();
 
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setString(1,clientFullName);
+            pstmt.setString(1, clientFullName);
             pstmt.setString(2, objective);
             pstmt.setString(3, location);
             pstmt.setString(4, dateMission);
+            pstmt.setString(5, dateCreation);
+            pstmt.setString(6, status);
             pstmt.executeUpdate();
             System.out.println("Mission created successfully\n");
 

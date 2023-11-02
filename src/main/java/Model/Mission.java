@@ -8,6 +8,8 @@ public class Mission {
     private String objective;
     private String dateCreation;
 
+    private String status;
+
 
     // Getters and setters
     public Client getClient(){ return client; }
@@ -44,6 +46,12 @@ public class Mission {
 
     public void setObjective(String objective) {
         this.objective = objective;
+    }
+
+    public String getStatus() { return status; }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 
