@@ -23,9 +23,7 @@ public class ClientApp extends JFrame{
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(7, 2));
 
-        JLabel nameLabel = new JLabel("Name :" + connectedClient.getName() + connectedClient.getSurname());
-
-        //JLabel typeLabel = new JLabel("Email:");
+        JLabel nameLabel = new JLabel("Client :" + connectedClient.getName() + " " + connectedClient.getSurname());
 
 
         // Create buttons for accepting and declining missions
