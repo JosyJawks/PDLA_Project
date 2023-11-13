@@ -4,9 +4,11 @@ import Model.Database;
 import Model.User;
 import Model.Client;
 import Model.Volunteer;
+import View.MissionApp;
 import View.SignUpApp;
 import View.SignInApp;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -84,7 +86,7 @@ public class UserController {
 		}
 	}
 
-	public static void SignIn() {
+	public static User SignIn() {
 
 		// Get Array of data from interface
 		String[] UserData = SignInApp.getFinal();
@@ -116,6 +118,8 @@ public class UserController {
 					String typeCli = "Client";
 					connectedClient = createClient(nameCli,surnameCli,emailCli,pwdCli,typeCli);
 					System.out.println("Connected as " + connectedClient.getName() + " " + connectedClient.getSurname() + " - " + connectedClient.getType() + "\n");
+					//SwingUtilities.invokeLater(MissionApp::new);
+					return connectedClient;
 				} else if (resultSet.getString("type").equals("Volunteer")) {
 					String nameVolunt = resultSet.getString("name");
 					String surnameVolunt = resultSet.getString("surname");
@@ -124,6 +128,7 @@ public class UserController {
 					String typeVolunt = "Volunteer";
 					connectedVolunteer = createVolunteer(nameVolunt,surnameVolunt,emailVolunt,pwdVolunt,typeVolunt);
 					System.out.println("Connected as " + connectedVolunteer.getName() + " " + connectedVolunteer.getSurname() + " - " + connectedVolunteer.getType() + "\n");
+					return connectedVolunteer;
 				}
 			} else {
 				// User does not exist or the credentials are incorrect
@@ -134,6 +139,7 @@ public class UserController {
 			e.printStackTrace();
 		}
 
+		return null;
 	}
 
 	public static Client getConnectedClient() {

@@ -6,7 +6,11 @@ import Model.Volunteer;
 
 public class ClientController {
 
+    private Client client;
 
+    public ClientController(Client cli){
+        client = cli;
+    }
     private void endMission(){
         // /!\ Need to get information about the Client
         Client C = new Client();
