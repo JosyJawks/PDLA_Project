@@ -1,5 +1,3 @@
-package Tests;
-
 import Controller.UserController;
 import org.junit.jupiter.api.*;
 import Controller.*;
