@@ -120,7 +120,7 @@ public class UserController {
 					connectedClient = createClient(nameCli,surnameCli,emailCli,pwdCli,typeCli);
 					System.out.println("Connected as " + connectedClient.getName() + " " + connectedClient.getSurname() + " - " + connectedClient.getType() + "\n");
 					ClientApp cliApp = new ClientApp(connectedClient);
-					cliApp.show();
+					cliApp.setVisible(true);
 				} else if (resultSet.getString("type").equals("Volunteer")) {
 					String nameVolunt = resultSet.getString("name");
 					String surnameVolunt = resultSet.getString("surname");

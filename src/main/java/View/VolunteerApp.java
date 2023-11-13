@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class VolunteerApp {
+public class VolunteerApp extends JFrame{
 
     private final JList<String> missionList;
     private final DefaultListModel<String> missionListModel;
