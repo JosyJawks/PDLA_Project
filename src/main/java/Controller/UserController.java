@@ -87,7 +87,7 @@ public class UserController {
 		}
 	}
 
-	public static User SignIn() {
+	public static void SignIn() {
 
 		// Get Array of data from interface
 		String[] UserData = SignInApp.getFinal();
@@ -120,8 +120,7 @@ public class UserController {
 					connectedClient = createClient(nameCli,surnameCli,emailCli,pwdCli,typeCli);
 					System.out.println("Connected as " + connectedClient.getName() + " " + connectedClient.getSurname() + " - " + connectedClient.getType() + "\n");
 					ClientApp cliApp = new ClientApp(connectedClient);
-					//SwingUtilities.invokeLater(ClientApp::new);
-					return connectedClient;
+					cliApp.show();
 				} else if (resultSet.getString("type").equals("Volunteer")) {
 					String nameVolunt = resultSet.getString("name");
 					String surnameVolunt = resultSet.getString("surname");
@@ -130,7 +129,6 @@ public class UserController {
 					String typeVolunt = "Volunteer";
 					connectedVolunteer = createVolunteer(nameVolunt,surnameVolunt,emailVolunt,pwdVolunt,typeVolunt);
 					System.out.println("Connected as " + connectedVolunteer.getName() + " " + connectedVolunteer.getSurname() + " - " + connectedVolunteer.getType() + "\n");
-					return connectedVolunteer;
 				}
 			} else {
 				// User does not exist or the credentials are incorrect
@@ -140,8 +138,6 @@ public class UserController {
 			System.out.println("Sign in failed " + e.getMessage() + "\n");
 			e.printStackTrace();
 		}
-
-		return null;
 	}
 
 	public static Client getConnectedClient() {
