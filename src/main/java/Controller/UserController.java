@@ -7,6 +7,7 @@ import Model.Volunteer;
 import View.MissionApp;
 import View.SignUpApp;
 import View.SignInApp;
+import View.ClientApp;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -118,7 +119,8 @@ public class UserController {
 					String typeCli = "Client";
 					connectedClient = createClient(nameCli,surnameCli,emailCli,pwdCli,typeCli);
 					System.out.println("Connected as " + connectedClient.getName() + " " + connectedClient.getSurname() + " - " + connectedClient.getType() + "\n");
-					//SwingUtilities.invokeLater(MissionApp::new);
+					ClientApp cliApp = new ClientApp(connectedClient);
+					//SwingUtilities.invokeLater(ClientApp::new);
 					return connectedClient;
 				} else if (resultSet.getString("type").equals("Volunteer")) {
 					String nameVolunt = resultSet.getString("name");

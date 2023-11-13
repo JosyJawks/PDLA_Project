@@ -1,15 +1,19 @@
 package View;
 
 import Controller.MissionController;
+import Model.Client;
 
 import javax.swing.*;
 import java.awt.*;
 
 
-public class ClientApp {
+public class ClientApp extends JFrame{
 
+    private Client connectedClient;
+    public ClientApp(Client c) {
 
-    public ClientApp() {
+        this.connectedClient = c;
+
         JFrame frame = new JFrame("Client Interface");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 300);
@@ -33,13 +37,6 @@ public class ClientApp {
 
         frame.add(panel);
         frame.setVisible(true);
-    }
-
-
-
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(ClientApp::new);
     }
 }
 
