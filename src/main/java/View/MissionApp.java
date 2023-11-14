@@ -1,20 +1,22 @@
 package View;
 
 import Controller.MissionController;
+import Model.Client;
+import Model.Mission;
 
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MissionApp {
+public class MissionApp extends JFrame{
 
-    private static String[] Final;
+    private static Mission Final;
     private final JTextField objectifTextField;
     private final JTextField lieuTextField;
     private final JTextField dateMissionTextField;
 
-    public MissionApp() {
+    public MissionApp(Client c) {
         JFrame frame = new JFrame("New Mission");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 250);
@@ -43,8 +45,8 @@ public class MissionApp {
         creerMissionButton.addActionListener(e -> {
             Final = creerMission();
             MissionController.Mission();
-
-            //cliApp.setVisible(true);
+            ClientApp cliApp = new ClientApp(c, Final);
+            cliApp.setVisible(true);
         });
 
         panel.add(objectifLabel);
@@ -62,19 +64,13 @@ public class MissionApp {
         frame.setVisible(true);
     }
 
-    private String[] creerMission() {
-        String location = lieuTextField.getText();
-        String datemission = dateMissionTextField.getText();
-        String objective = objectifTextField.getText();
-        String datecreation = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
-        return new String[]{location, datemission, objective, datecreation};
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(MissionApp::new);
-    }
-
-    public static String[] getFinal() {
-        return Final;
+    private Mission creerMission() {
+        Mission mission = new Mission();
+        mission.setStatus("Pending");
+        mission.setDateCreation(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+        mission.setDateMission(dateMissionTextField.getText());
+        mission.setLocation(lieuTextField.getText());
+        mission.setObjective(objectifTextField.getText());
+        return mission;
     }
 }

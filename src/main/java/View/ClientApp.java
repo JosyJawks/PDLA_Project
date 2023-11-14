@@ -2,18 +2,18 @@ package View;
 
 import Controller.MissionController;
 import Model.Client;
+import Model.Mission;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ClientApp extends JFrame{
+    List<Mission> missionList = new ArrayList<Mission>();
 
-    private Client connectedClient;
-
-    public ClientApp(Client c) {
-
-        this.connectedClient = c;
+    public ClientApp(Client c, Mission l) {
 
         JFrame frame = new JFrame("Client Interface");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,14 +23,26 @@ public class ClientApp extends JFrame{
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(7, 2));
 
-        JLabel nameLabel = new JLabel("Client :" + connectedClient.getName() + " " + connectedClient.getSurname());
+        JLabel nameLabel = new JLabel("Client :" + c.getName() + " " + c.getSurname());
 
 
         // Create buttons for accepting and declining missions
         JButton CreateMissionButton = new JButton("Create Mission");
         CreateMissionButton.addActionListener(e -> {
-            SwingUtilities.invokeLater(MissionApp::new);
+            MissionApp missionApp = new MissionApp(c);
+            missionApp.setVisible(true);
         });
+        //AJOUTER ICI LES MISSIONS RENVOYEES DE MISSIONAPP
+        if (l!=null)
+        {
+            missionList.add(l);
+            l=null;
+            //foreach mission in missionlist faire un panel de mission vertical
+            JPanel missionpanel = new JPanel();
+            missionpanel.setLayout(new GridLayout(missionList.size(), 1));
+
+        }
+
         panel.add(nameLabel);
         panel.add(CreateMissionButton);
 
