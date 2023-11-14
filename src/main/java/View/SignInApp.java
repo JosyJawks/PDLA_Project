@@ -5,7 +5,7 @@ import Controller.UserController;
 import javax.swing.*;
 import java.awt.*;
 
-public class SignInApp {
+public class SignInApp extends JFrame {
 
     private static String[] Final;
     private final JTextField emailTextField;
@@ -34,7 +34,9 @@ public class SignInApp {
 
         JButton signUpButton = new JButton("Sign Up");
         signUpButton.addActionListener(e -> {
-            SwingUtilities.invokeLater(SignUpApp::new);
+            frame.setVisible(false);
+            SignUpApp signUpApp = new SignUpApp();
+            signUpApp.setVisible(true);
         });
 
         // Create a panel for the button and center it
