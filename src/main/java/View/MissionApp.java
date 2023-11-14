@@ -43,6 +43,8 @@ public class MissionApp {
         creerMissionButton.addActionListener(e -> {
             Final = creerMission();
             MissionController.Mission();
+
+            //cliApp.setVisible(true);
         });
 
         panel.add(objectifLabel);
