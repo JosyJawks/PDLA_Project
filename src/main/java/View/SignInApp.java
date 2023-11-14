@@ -32,17 +32,25 @@ public class SignInApp {
             UserController.SignIn();
         });
 
+        JButton signUpButton = new JButton("Sign Up");
+        signUpButton.addActionListener(e -> {
+            SwingUtilities.invokeLater(SignUpApp::new);
+        });
+
         // Create a panel for the button and center it
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.add(signInButton);
+        JPanel signInbuttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel signUpbuttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        signInbuttonPanel.add(signInButton);
+        signUpbuttonPanel.add(signUpButton);
 
         panel.add(emailLabel);
         panel.add(emailTextField);
         panel.add(passwordLabel);
         panel.add(passwordField);
 
-        panel.add(new JLabel()); // Empty label for spacing
-        panel.add(buttonPanel);
+        panel.add(signUpbuttonPanel);
+        panel.add(signInbuttonPanel);
 
         frame.add(panel);
         frame.setVisible(true);
