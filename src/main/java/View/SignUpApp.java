@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Enumeration;
 
-public class SignUpApp {
+public class SignUpApp extends JFrame{
 
     private static String[] Final;
     private final JTextField nameTextField;
@@ -57,6 +57,9 @@ public class SignUpApp {
             typeTextField = getType(groupType);
             Final = creerSignUp();
             UserController.SignUp();
+            frame.setVisible(false);
+            SignInApp signInApp = new SignInApp();
+            signInApp.setVisible(true);
         });
 
         // Create a panel for the button and center it

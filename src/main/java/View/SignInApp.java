@@ -5,7 +5,7 @@ import Controller.UserController;
 import javax.swing.*;
 import java.awt.*;
 
-public class SignInApp {
+public class SignInApp extends JFrame {
 
     private static String[] Final;
     private final JTextField emailTextField;
@@ -32,17 +32,27 @@ public class SignInApp {
             UserController.SignIn();
         });
 
+        JButton signUpButton = new JButton("Sign Up");
+        signUpButton.addActionListener(e -> {
+            frame.setVisible(false);
+            SignUpApp signUpApp = new SignUpApp();
+            signUpApp.setVisible(true);
+        });
+
         // Create a panel for the button and center it
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.add(signInButton);
+        JPanel signInbuttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JPanel signUpbuttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        signInbuttonPanel.add(signInButton);
+        signUpbuttonPanel.add(signUpButton);
 
         panel.add(emailLabel);
         panel.add(emailTextField);
         panel.add(passwordLabel);
         panel.add(passwordField);
 
-        panel.add(new JLabel()); // Empty label for spacing
-        panel.add(buttonPanel);
+        panel.add(signUpbuttonPanel);
+        panel.add(signInbuttonPanel);
 
         frame.add(panel);
         frame.setVisible(true);
