@@ -44,7 +44,7 @@
     	<dependency>
         	<groupId>mysql</groupId>
         	<artifactId>mysql-connector-java</artifactId>
-        	<version>8.0.23</version>
+        	<version>8.0.33</version>
     	</dependency>
 
 		<dependency>
@@ -65,7 +65,12 @@
 			<version>5.10.0</version>
 			<scope>compile</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>5.2.0</version>
+			<scope>test</scope>
+		</dependency>
 
 
 	</dependencies>
