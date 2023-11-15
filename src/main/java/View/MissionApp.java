@@ -9,24 +9,26 @@ import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MissionApp extends JFrame{
+public class MissionApp extends JFrame {
 
-    private static Mission Final;
-    private final JTextField objectifTextField;
+    private final JTextField objectiveTextField;
     private final JTextField lieuTextField;
     private final JTextField dateMissionTextField;
 
-    public MissionApp(Client c) {
+    public MissionApp(Client c, ClientApp clientApp) {
+        // Create a new JFrame for the MissionApp
         JFrame frame = new JFrame("New Mission");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 250);
         frame.setLocationRelativeTo(null);
 
+        // Create a panel for organizing components with GridLayout
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(7, 2));
 
-        JLabel objectifLabel = new JLabel("Objective:");
-        objectifTextField = new JTextField();
+        // Labels and text fields for mission details
+        JLabel objectiveLabel = new JLabel("Objective:");
+        objectiveTextField = new JTextField();
 
         JLabel lieuLabel = new JLabel("Location:");
         lieuTextField = new JTextField();
@@ -36,21 +38,28 @@ public class MissionApp extends JFrame{
 
         JLabel dateCreationLabel = new JLabel("Date of creation:");
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        // Set the current date in the dateCreationLabel using SimpleDateFormat
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Date currentDate = new Date();
         String currentDateString = dateFormat.format(currentDate);
         dateCreationLabel.setText(currentDateString);
 
-        JButton creerMissionButton = new JButton("Create Mission");
-        creerMissionButton.addActionListener(e -> {
-            Final = creerMission();
-            MissionController.Mission();
-            ClientApp cliApp = new ClientApp(c, Final);
-            cliApp.setVisible(true);
+        // Button to create and save the new mission
+        JButton createMissionButton = new JButton("Create Mission");
+        createMissionButton.addActionListener(e -> {
+            // Create a new mission with the entered details
+            Mission createdMission = createMission(c);
+            // Save the mission to the database
+            MissionController.saveMission(createdMission);
+            // Update the mission list in the ClientApp interface
+            clientApp.updateMissionList(createdMission);
+            // Close the window after mission creation
+            frame.dispose();
         });
 
-        panel.add(objectifLabel);
-        panel.add(objectifTextField);
+        // Add components to the panel
+        panel.add(objectiveLabel);
+        panel.add(objectiveTextField);
         panel.add(lieuLabel);
         panel.add(lieuTextField);
         panel.add(dateMissionLabel);
@@ -58,19 +67,22 @@ public class MissionApp extends JFrame{
         panel.add(dateCreationLabel);
         panel.add(new JLabel()); // Empty label for spacing
         panel.add(new JLabel()); // Empty label for spacing
-        panel.add(creerMissionButton);
+        panel.add(createMissionButton);
 
+        // Add the panel to the JFrame
         frame.add(panel);
         frame.setVisible(true);
     }
 
-    private Mission creerMission() {
+    // Method to create a new Mission object with entered details
+    private Mission createMission(Client client) {
         Mission mission = new Mission();
         mission.setStatus("Pending");
-        mission.setDateCreation(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+        mission.setDateCreation(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
         mission.setDateMission(dateMissionTextField.getText());
         mission.setLocation(lieuTextField.getText());
-        mission.setObjective(objectifTextField.getText());
+        mission.setObjective(objectiveTextField.getText());
+        mission.setClient(client);
         return mission;
     }
 }
