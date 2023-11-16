@@ -8,6 +8,7 @@ import View.MissionApp;
 import View.SignUpApp;
 import View.SignInApp;
 import View.ClientApp;
+import View.VolunteerApp;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -129,6 +130,8 @@ public class UserController {
 					String typeVolunt = "Volunteer";
 					connectedVolunteer = createVolunteer(nameVolunt,surnameVolunt,emailVolunt,pwdVolunt,typeVolunt);
 					System.out.println("Connected as " + connectedVolunteer.getName() + " " + connectedVolunteer.getSurname() + " - " + connectedVolunteer.getType() + "\n");
+					VolunteerApp volApp = new VolunteerApp(connectedVolunteer);
+					volApp.setVisible(true);
 				}
 			} else {
 				// User does not exist or the credentials are incorrect

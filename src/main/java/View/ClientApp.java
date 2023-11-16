@@ -26,7 +26,7 @@ public class ClientApp extends JFrame {
         panel.setLayout(new BorderLayout());
 
         // Create a label to display the client's name and surname
-        JLabel nameLabel = new JLabel("Client :" + c.getName() + " " + c.getSurname());
+        JLabel nameLabel = new JLabel("Client : " + c.getName() + " " + c.getSurname());
 
         // Create a button for creating missions
         JButton createMissionButton = new JButton("Create Mission");

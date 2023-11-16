@@ -1,34 +1,56 @@
 package View;
 
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.*;
+import java.awt.event.*;
+import java.util.List;
 
+import Controller.MissionController;
+import Model.Volunteer;
+import Model.Mission;
 
-public class VolunteerApp extends JFrame{
+public class VolunteerApp extends JPanel implements ListSelectionListener{
 
+    private final List<Mission> missionInfoList;
     private final JList<String> missionList;
     private final DefaultListModel<String> missionListModel;
 
-    public VolunteerApp() {
+    private final JButton acceptButton;
+    private final JButton declineButton;
+
+    public VolunteerApp(Volunteer v) {
         JFrame frame = new JFrame("Mission Management");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 300);
+        frame.setSize(750, 400);
         frame.setLocationRelativeTo(null);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
+        // Create a label to display the client's name and surname
+        JLabel nameLabel = new JLabel("Volunteer : " + v.getName() + " " + v.getSurname());
+
+        // Load missions from the database for the client
+        missionInfoList = MissionController.getMissionsForVolunteer();
+
         // Create a list for displaying missions
         missionListModel = new DefaultListModel<>();
+        getMissions();
+
         missionList = new JList<>(missionListModel);
+        missionList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        missionList.setSelectedIndex(0);
+        missionList.addListSelectionListener(this);
+        missionList.setVisibleRowCount(5);
         JScrollPane listScrollPane = new JScrollPane(missionList);
 
         // Create buttons for accepting and declining missions
-        JButton acceptButton = new JButton("Accept");
-        acceptButton.setEnabled(false); // Initially disabled
-        acceptButton.addActionListener(e -> acceptMission());
+        acceptButton = new JButton("Accept");
+        acceptButton.setActionCommand("Accept"); // Initially disabled
+        acceptButton.addActionListener(new acceptMission());
 
-        JButton declineButton = new JButton("Decline");
+        declineButton = new JButton("Decline");
         declineButton.setEnabled(false); // Initially disabled
         declineButton.addActionListener(e -> declineMission());
 
@@ -39,20 +61,28 @@ public class VolunteerApp extends JFrame{
         buttonPanel.add(declineButton);
 
         // Add components to the main panel
+        panel.add(nameLabel, BorderLayout.NORTH);
         panel.add(listScrollPane, BorderLayout.CENTER);
         panel.add(buttonPanel, BorderLayout.SOUTH);
 
         frame.add(panel);
         frame.setVisible(true);
+
     }
 
-    private void acceptMission() {
-        // Implement logic to accept the selected mission
-        int selectedIndex = missionList.getSelectedIndex();
-        if (selectedIndex != -1) {
-            String selectedMission = missionListModel.get(selectedIndex);
-            // Add your logic here to handle mission acceptance
-            System.out.println("Accepted mission: " + selectedMission);
+    class acceptMission implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            int index = missionList.getSelectedIndex();
+
+            int size = missionListModel.getSize();
+
+            if (size == 0) {
+                acceptButton.setEnabled(false);
+
+            } else { //Select an index.
+                missionList.setSelectedIndex(index);
+                missionList.ensureIndexIsVisible(index);
+            }
         }
     }
 
@@ -66,7 +96,28 @@ public class VolunteerApp extends JFrame{
         }
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(VolunteerApp::new);
+
+    private void getMissions() {
+        for (Mission mission : missionInfoList) {
+            missionListModel.addElement("Mission : " + mission.getObjective() + " | "
+                    + "Location : " + mission.getLocation() + " | "
+                    + "Mission Date : " + mission.getDateMission() + " | "
+                    + "Creation Date : " + mission.getDateCreation() + " | "
+                    + "Status : " + mission.getStatus());
+        }
+
     }
+
+    public void valueChanged(ListSelectionEvent e) {
+        if(e.getValueIsAdjusting() == false) {
+            if(missionList.getSelectedIndex() == -1) {
+                acceptButton.setEnabled(false);
+                declineButton.setEnabled(false);
+            } else {
+                acceptButton.setEnabled(true);
+                declineButton.setEnabled(true);
+            }
+        }
+    }
+
 }

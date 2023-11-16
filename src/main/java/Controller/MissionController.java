@@ -70,4 +70,39 @@ public class MissionController {
         // Return the list of Mission objects retrieved from the database
         return missionList;
     }
+
+    public static List<Mission> getMissionsForVolunteer() {
+        // Create a list to store Mission objects retrieved from the database
+        List<Mission> missionList = new ArrayList<>();
+
+        // Define the SQL query to select missions for a specific client
+        String sql = "SELECT * FROM Missions WHERE status = ? OR status = ?";
+
+        Connection con = Database.Connect();
+
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1,"Pending");
+            pstmt.setString(2,"Confirmed");
+            // Execute the SQL query and obtain a ResultSet
+            ResultSet resultSet = pstmt.executeQuery();
+
+            // Iterate through the ResultSet to retrieve mission details
+            while (resultSet.next()) {
+                // Create a new Mission object to store the retrieved details
+                Mission mission = new Mission();
+                mission.setObjective(resultSet.getString("objective"));
+                mission.setLocation(resultSet.getString("location"));
+                mission.setDateMission(resultSet.getString("missionDate"));
+                mission.setDateCreation(resultSet.getString("creationDate"));
+                mission.setStatus(resultSet.getString("status"));
+
+                // Add the Mission object to the list
+                missionList.add(mission);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // Return the list of Mission objects retrieved from the database
+        return missionList;
+    }
 }
