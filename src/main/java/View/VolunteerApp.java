@@ -52,7 +52,7 @@ public class VolunteerApp extends JPanel implements ListSelectionListener{
 
         declineButton = new JButton("Decline");
         declineButton.setEnabled(false); // Initially disabled
-        declineButton.addActionListener(e -> declineMission());
+        declineButton.addActionListener(new declineMission());
 
         // Create a panel for buttons
         JPanel buttonPanel = new JPanel();
@@ -73,8 +73,8 @@ public class VolunteerApp extends JPanel implements ListSelectionListener{
     class acceptMission implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             int index = missionList.getSelectedIndex();
-
             int size = missionListModel.getSize();
+            Mission selectedMission = missionInfoList.get(index);
 
             if (size == 0) {
                 acceptButton.setEnabled(false);
@@ -82,17 +82,32 @@ public class VolunteerApp extends JPanel implements ListSelectionListener{
             } else { //Select an index.
                 missionList.setSelectedIndex(index);
                 missionList.ensureIndexIsVisible(index);
+
+                System.out.println("index = " + index);
+                System.out.println("objective = " + selectedMission.getObjective());
+                MissionController.changeMissionStatus(selectedMission);
+
+                updateMission(selectedMission,index);
             }
         }
     }
 
-    private void declineMission() {
-        // Implement logic to decline the selected mission
-        int selectedIndex = missionList.getSelectedIndex();
-        if (selectedIndex != -1) {
-            String selectedMission = missionListModel.get(selectedIndex);
-            // Add your logic here to handle mission decline
-            System.out.println("Declined mission: " + selectedMission);
+    class declineMission implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            int index = missionList.getSelectedIndex();
+            int size = missionListModel.getSize();
+            missionListModel.remove(index);
+
+            if (size == 0) {
+                declineButton.setEnabled(false);
+
+            } else { //Select an index.
+                if(index == missionListModel.getSize()){
+                    index--;
+                }
+                missionList.setSelectedIndex(index);
+                missionList.ensureIndexIsVisible(index);
+            }
         }
     }
 
@@ -108,14 +123,34 @@ public class VolunteerApp extends JPanel implements ListSelectionListener{
 
     }
 
+
+    private void updateMission(Mission mission,int index) {
+
+        missionListModel.setElementAt("Mission : " + mission.getObjective() + " | "
+                + "Location : " + mission.getLocation() + " | "
+                + "Mission Date : " + mission.getDateMission() + " | "
+                + "Creation Date : " + mission.getDateCreation() + " | "
+                + "Status : Confirmed",index);
+
+    }
+
+
     public void valueChanged(ListSelectionEvent e) {
-        if(e.getValueIsAdjusting() == false) {
+        if(!e.getValueIsAdjusting()) {
             if(missionList.getSelectedIndex() == -1) {
                 acceptButton.setEnabled(false);
                 declineButton.setEnabled(false);
             } else {
-                acceptButton.setEnabled(true);
-                declineButton.setEnabled(true);
+                int index = missionList.getSelectedIndex();
+                Mission selectedMission = missionInfoList.get(index);
+                if(selectedMission.getStatus().equals("Pending")) {
+                    acceptButton.setEnabled(true);
+                    declineButton.setEnabled(true);
+                }
+                else{
+                    acceptButton.setEnabled(false);
+                    declineButton.setEnabled(false);
+                }
             }
         }
     }

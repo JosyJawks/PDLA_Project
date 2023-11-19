@@ -105,4 +105,29 @@ public class MissionController {
         // Return the list of Mission objects retrieved from the database
         return missionList;
     }
+
+    public static void changeMissionStatus(Mission mission) {
+        String location = mission.getLocation();
+        String dateMission = mission.getDateMission();
+        String objective = mission.getObjective();
+        String dateCreation = mission.getDateCreation();
+
+        String sql = "UPDATE Missions " +
+                "SET Status = 'Confirmed' " +
+                "WHERE objective = ? AND location = ? AND missionDate = ? AND creationDate = ?;";
+
+        Connection con = Database.Connect();
+
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, objective);
+            pstmt.setString(2, location);
+            pstmt.setString(3, dateMission);
+            pstmt.setString(4, dateCreation);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Mission status update failed\n");
+            e.printStackTrace();
+        }
+    }
+
 }
