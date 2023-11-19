@@ -106,23 +106,52 @@ public class MissionController {
         return missionList;
     }
 
-    public static void changeMissionStatus(Mission mission) {
+    public static List<String> getNamesForVolunteer() {
+        // Create a list to store Mnames retrieved from the database
+        List<String> nameList = new ArrayList<>();
+
+        // Define the SQL query to select missions for a specific client
+        String sql = "SELECT client FROM Missions WHERE status = ? OR status = ?";
+
+        Connection con = Database.Connect();
+
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1,"Pending");
+            pstmt.setString(2,"Confirmed");
+            // Execute the SQL query and obtain a ResultSet
+            ResultSet resultSet = pstmt.executeQuery();
+
+            // Iterate through the ResultSet to retrieve mission details
+            while (resultSet.next()) {
+                // Add the names to the list
+                nameList.add(resultSet.getString("client"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        // Return the list of Mission objects retrieved from the database
+        return nameList;
+    }
+
+    public static void changeMissionStatus(Mission mission, String name, String status) {
         String location = mission.getLocation();
         String dateMission = mission.getDateMission();
         String objective = mission.getObjective();
         String dateCreation = mission.getDateCreation();
 
         String sql = "UPDATE Missions " +
-                "SET Status = 'Confirmed' " +
-                "WHERE objective = ? AND location = ? AND missionDate = ? AND creationDate = ?;";
+                "SET Status = ? " +
+                "WHERE client = ? AND objective = ? AND location = ? AND missionDate = ? AND creationDate = ?;";
 
         Connection con = Database.Connect();
 
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setString(1, objective);
-            pstmt.setString(2, location);
-            pstmt.setString(3, dateMission);
-            pstmt.setString(4, dateCreation);
+            pstmt.setString(1,status);
+            pstmt.setString(2, name);
+            pstmt.setString(3, objective);
+            pstmt.setString(4, location);
+            pstmt.setString(5, dateMission);
+            pstmt.setString(6, dateCreation);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Mission status update failed\n");

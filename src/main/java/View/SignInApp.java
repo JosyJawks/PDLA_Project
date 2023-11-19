@@ -30,6 +30,7 @@ public class SignInApp extends JFrame {
         signInButton.addActionListener(e -> {
             Final = creerSignIn();
             UserController.SignIn();
+            frame.setVisible(false);
         });
 
         JButton signUpButton = new JButton("Sign Up");
