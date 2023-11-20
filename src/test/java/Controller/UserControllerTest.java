@@ -35,19 +35,19 @@ public class UserControllerTest {
         Database.createMissionTable();
     }
 
-    @AfterAll
+    /*@AfterAll
     public static void tearDown() {
         // Clear test data after each test
         clearUserData();
-    }
+    }*/
 
-    private static void clearUserData() {
+    /*private static void clearUserData() {
         try (PreparedStatement pstmt = testConnection.prepareStatement("DELETE FROM Users")) {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 
     @BeforeEach

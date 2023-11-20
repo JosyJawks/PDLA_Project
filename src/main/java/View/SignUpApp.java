@@ -112,9 +112,6 @@ public class SignUpApp extends JFrame{
         return new String[]{name, surname, email, type, password, confirmPassword};
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(SignUpApp::new);
-    }
 
     public static String[] getFinal() {
         return Final;
