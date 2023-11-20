@@ -73,4 +73,7 @@ public class SignInApp extends JFrame {
     public static String[] getFinal() {
         return Final;
     }
+    public static void setFinal(String[] finalData) {
+        Final = finalData;
+    }
 }

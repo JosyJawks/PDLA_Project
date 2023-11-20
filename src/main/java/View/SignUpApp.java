@@ -16,7 +16,8 @@ public class SignUpApp extends JFrame{
     private final JPasswordField passwordField;
     private final JPasswordField confirmPasswordField;
 
-    public SignUpApp() {
+    public SignUpApp(){
+
         JFrame frame = new JFrame("Sign Up");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
@@ -86,6 +87,9 @@ public class SignUpApp extends JFrame{
         frame.setVisible(true);
     }
 
+    public static void setFinal(String[] finalData) {
+        Final = finalData;
+    }
     private String getType(ButtonGroup groupType) {
         for (Enumeration<AbstractButton> buttons = groupType.getElements(); buttons.hasMoreElements();) {
             AbstractButton button = buttons.nextElement();
