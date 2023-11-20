@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 public class UserController {
 
@@ -57,9 +58,9 @@ public class UserController {
 	public static void SignUp() {
 		// Get Array of data from interface
 		String[] UserData = SignUpApp.getFinal();
-
+		System.out.println(Arrays.toString(UserData));
 		// Check if UserData is not null and has the expected length
-		if (UserData != null && UserData.length == 5) {
+		if (UserData != null && UserData.length == 6) {
 			// Create user with data
 			User U = createUser(UserData[0], UserData[1], UserData[2], UserData[4], UserData[3]);
 
