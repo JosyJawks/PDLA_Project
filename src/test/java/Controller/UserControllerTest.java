@@ -18,13 +18,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 public class UserControllerTest {
 
     private static Connection testConnection;
-    private static Client testClient;
-    private static Volunteer testVolunteer;
+    private Client testClient;
+    private Volunteer testVolunteer;
 
     @BeforeAll
     public static void setUpBeforeClass() {
@@ -35,19 +34,35 @@ public class UserControllerTest {
         Database.createMissionTable();
     }
 
-    /*@AfterAll
-    public static void tearDown() {
+    @AfterAll
+    public static void tearDown() throws SQLException {
         // Clear test data after each test
         clearUserData();
-    }*/
+    }
 
-    /*private static void clearUserData() {
-        try (PreparedStatement pstmt = testConnection.prepareStatement("DELETE FROM Users")) {
-            pstmt.executeUpdate();
+    private static void clearUserData() throws SQLException {
+        try (PreparedStatement pstmt1 = testConnection.prepareStatement("DELETE FROM Users " +
+                "WHERE name = 'John' " +
+                "AND surname = 'Doe' " +
+                "AND email = 'john.doe@example.com' " +
+                "AND password = 'password' " +
+                "AND type = 'Client';")) {
+            pstmt1.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }*/
+        try (PreparedStatement pstmt2 = testConnection.prepareStatement("DELETE FROM Users " +
+                "WHERE name = 'Jane' " +
+                "AND surname = 'Doe' " +
+                "AND email = 'jane.doe@example.com' " +
+                "AND password = 'password' " +
+                "AND type = 'Volunteer';")) {
+            pstmt2.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        testConnection.close();
+    }
 
 
     @BeforeEach
@@ -107,12 +122,11 @@ public class UserControllerTest {
     @Test
     public void testSignUp() {
         // Set up the SignUpApp interface with test data
-        SignUpApp.setFinal(new String[]{"John", "Doe", "john.doe@example.com", "Client", "password"});
+        SignUpApp.setFinal(new String[]{"John", "Doe", "john.doe@example.com", "Client", "password","password"});
 
         UserController.SignUp();
 
         // Check if the client is saved in the database
-        // Adjust the SQL query based on your database schema
         try (PreparedStatement pstmt = testConnection.prepareStatement("SELECT * FROM Users WHERE email = ?")) {
             pstmt.setString(1, "john.doe@example.com");
             ResultSet resultSet = pstmt.executeQuery();
@@ -123,15 +137,15 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testSignIn() {
+    public void testSignInClient() {
+        System.out.println("Client : " + testClient.getName() + " " + testClient.getSurname() + "\n");
         // Set up the SignUpApp interface with test data
-        SignUpApp.setFinal(new String[]{"John", "Doe", "john.doe@example.com", "Client", "password"});
+        SignUpApp.setFinal(new String[]{"John", "Doe", "john.doe@example.com", "Client", "password", "password"});
 
         // Sign up
         UserController.SignUp();
 
         // Check if the client is saved in the database
-        // Adjust the SQL query based on your database schema
         try (PreparedStatement pstmt = testConnection.prepareStatement("SELECT * FROM Users WHERE email = ?")) {
             pstmt.setString(1, "john.doe@example.com");
             ResultSet resultSet = pstmt.executeQuery();
@@ -149,6 +163,35 @@ public class UserControllerTest {
 
         // Check if the connectedClient is not null
         assertNotNull(UserController.getConnectedClient());
+    }
+
+    @Test
+    public void testSignInVolunteer() {
+        System.out.println("Volunteer : " + testVolunteer.getName() + " " + testVolunteer.getSurname() + "\n");
+        // Set up the SignUpApp interface with test data
+        SignUpApp.setFinal(new String[]{"Jane", "Doe", "jane.doe@example.com", "Volunteer", "password", "password"});
+
+        // Sign up
+        UserController.SignUp();
+
+        // Check if the volunteer is saved in the database
+        try (PreparedStatement pstmt = testConnection.prepareStatement("SELECT * FROM Users WHERE email = ?")) {
+            pstmt.setString(1, "jane.doe@example.com");
+            ResultSet resultSet = pstmt.executeQuery();
+            assertTrue(resultSet.next());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            fail("Error checking if the volunteer is saved in the database");
+        }
+
+        // Set up the SignInApp interface with test data
+        SignInApp.setFinal(new String[]{"jane.doe@example.com", "password"});
+
+        // Try signing in with the test credentials
+        UserController.SignIn();
+
+        // Check if the connectedVolunteer is not null
+        assertNotNull(UserController.getConnectedVolunteer());
     }
 
 

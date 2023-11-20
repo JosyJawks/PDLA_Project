@@ -22,8 +22,8 @@ public class MissionControllerTest {
 
     private static Connection testConnection;
 
-    private Mission testMission;
-    private Client testClient;
+    private static Mission testMission;
+    private static Client testClient;
 
     @BeforeAll
     public static void setUpBeforeClass() {
@@ -37,7 +37,13 @@ public class MissionControllerTest {
     @AfterAll
     public static void tearDownAfterClass() {
         // Close the test database connection after all tests
-        try {
+        try (PreparedStatement pstmt = testConnection.prepareStatement("DELETE FROM Missions " +
+                "WHERE client = 'John Doe' AND " +
+                "objective = 'Test Objective' " +
+                "AND location = 'Test Location' " +
+                "AND missionDate = '2023-11-20' " +
+                "AND creationDate = '2023-11-19';")) {
+            pstmt.executeUpdate();
             testConnection.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -65,7 +71,6 @@ public class MissionControllerTest {
         MissionController.saveMission(testMission);
 
         // Check if the mission is saved in the database
-        // Adjust the SQL query based on your database schema
         try (PreparedStatement pstmt = testConnection.prepareStatement("SELECT * FROM Missions WHERE client = ?")) {
             pstmt.setString(1, testClient.getName() + " " + testClient.getSurname());
             ResultSet resultSet = pstmt.executeQuery();
@@ -85,7 +90,6 @@ public class MissionControllerTest {
 
         // Assert that the list is not empty
         assertFalse(missions.isEmpty());
-        // Add more assertions based on your expected data
     }
 
     @Test
@@ -100,7 +104,6 @@ public class MissionControllerTest {
 
         // Assert that the list is not empty
         assertFalse(missions.isEmpty());
-        // Add more assertions based on your expected data
     }
 
     @Test
@@ -115,7 +118,6 @@ public class MissionControllerTest {
 
         // Assert that the list is not empty
         assertFalse(names.isEmpty());
-        // Add more assertions based on your expected data
     }
 
     @Test
@@ -131,7 +133,6 @@ public class MissionControllerTest {
             pstmt.setString(1, testClient.getName() + " " + testClient.getSurname());
             ResultSet resultSet = pstmt.executeQuery();
             assertTrue(resultSet.next());
-            // Add assertions based on your expected data and the changed status
         } catch (SQLException e) {
             e.printStackTrace();
         }
