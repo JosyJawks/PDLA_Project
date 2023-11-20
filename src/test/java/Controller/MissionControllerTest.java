@@ -1,20 +1,22 @@
 package Controller;
 
-import static org.junit.Assert.*;
 
 import Model.Client;
 import Model.Database;
 import Model.Mission;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MissionControllerTest {
 
@@ -23,7 +25,7 @@ public class MissionControllerTest {
     private Mission testMission;
     private Client testClient;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpBeforeClass() {
         // Initialize the database connection for testing
         testConnection = Database.Connect();
@@ -32,7 +34,7 @@ public class MissionControllerTest {
         Database.createMissionTable();
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownAfterClass() {
         // Close the test database connection after all tests
         try {
@@ -42,7 +44,7 @@ public class MissionControllerTest {
         }
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         // Initialize test data
         testClient = new Client();

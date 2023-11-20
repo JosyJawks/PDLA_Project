@@ -1,6 +1,5 @@
 package Controller;
 
-import static org.junit.Assert.*;
 
 import Model.Client;
 import Model.Database;
@@ -8,15 +7,17 @@ import Model.User;
 import Model.Volunteer;
 import View.SignInApp;
 import View.SignUpApp;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class UserControllerTest {
@@ -25,7 +26,7 @@ public class UserControllerTest {
     private static Client testClient;
     private static Volunteer testVolunteer;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpBeforeClass() {
         // Initialize the database connection for testing
         testConnection = Database.Connect();
@@ -34,13 +35,13 @@ public class UserControllerTest {
         Database.createMissionTable();
     }
 
-    @After
-    public void tearDown() {
+    @AfterAll
+    public static void tearDown() {
         // Clear test data after each test
         clearUserData();
     }
 
-    private void clearUserData() {
+    private static void clearUserData() {
         try (PreparedStatement pstmt = testConnection.prepareStatement("DELETE FROM Users")) {
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -49,7 +50,7 @@ public class UserControllerTest {
     }
 
 
-    @Before
+    @BeforeEach
     public void setUp() {
         // Initialize test data
         testClient = new Client();
