@@ -5,7 +5,7 @@ import Controller.UserController;
 import javax.swing.*;
 import java.awt.*;
 
-public class SignInApp extends JFrame {
+public class SignInApp extends JPanel {
 
     private static String[] Final;
     private final JTextField emailTextField;
@@ -32,9 +32,12 @@ public class SignInApp extends JFrame {
         //Creation of the SignIn button
         JButton signInButton = new JButton("Sign In");
         signInButton.addActionListener(e -> {
+            boolean correctInfo;
             Final = creerSignIn();
-            UserController.SignIn();
-            frame.setVisible(false);
+            correctInfo = UserController.SignIn();
+            if(correctInfo) {
+                frame.setVisible(false);
+            }
         });
 
         //Creation of the SignUp button

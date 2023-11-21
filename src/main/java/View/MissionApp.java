@@ -47,14 +47,17 @@ public class MissionApp extends JPanel {
         // Button to create and save the new mission
         JButton createMissionButton = new JButton("Create Mission");
         createMissionButton.addActionListener(e -> {
+            boolean validMission;
             // Create a new mission with the entered details
             Mission createdMission = createMission(c);
             // Save the mission to the database
-            MissionController.saveMission(createdMission);
-            // Update the mission list in the ClientApp interface
-            clientApp.updateMissionList(createdMission);
-            // Close the window after mission creation
-            frame.dispose();
+            validMission = MissionController.saveMission(createdMission);
+            if(validMission) {
+                // Update the mission list in the ClientApp interface
+                clientApp.updateMissionList(createdMission);
+                // Close the window after mission creation
+                frame.dispose();
+            }
         });
 
         // Add components to the panel

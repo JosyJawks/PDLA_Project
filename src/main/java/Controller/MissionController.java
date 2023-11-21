@@ -13,27 +13,34 @@ import java.util.List;
 
 public class MissionController {
 
-    public static void saveMission(Mission mission) {
-        // SQL query to insert mission details into the "Missions" table
-        String sql = "INSERT IGNORE INTO Missions (client, objective, location, missionDate, creationDate, status) VALUES (?,?,?,?,?,?);";
+    public static boolean saveMission(Mission mission) {
+        boolean validMission = false;
+        if (!mission.getDateMission().equals("") && !mission.getLocation().equals("") && !mission.getObjective().equals("") ) {
+            // SQL query to insert mission details into the "Missions" table
+            String sql = "INSERT IGNORE INTO Missions (client, objective, location, missionDate, creationDate, status) VALUES (?,?,?,?,?,?);";
 
-        Connection con = Database.Connect();
+            Connection con = Database.Connect();
 
-        try (PreparedStatement newmission = con.prepareStatement(sql)) {
-            // Set parameters in the prepared statement with mission details
-            newmission.setString(1, mission.getClient().getName() + " " + mission.getClient().getSurname());
-            newmission.setString(2, mission.getObjective());
-            newmission.setString(3, mission.getLocation());
-            newmission.setString(4, mission.getDateMission());
-            newmission.setString(5, mission.getDateCreation());
-            newmission.setString(6, mission.getStatus());
-            newmission.executeUpdate();
-            System.out.println("Mission created successfully\n");
+            try (PreparedStatement newmission = con.prepareStatement(sql)) {
+                // Set parameters in the prepared statement with mission details
+                newmission.setString(1, mission.getClient().getName() + " " + mission.getClient().getSurname());
+                newmission.setString(2, mission.getObjective());
+                newmission.setString(3, mission.getLocation());
+                newmission.setString(4, mission.getDateMission());
+                newmission.setString(5, mission.getDateCreation());
+                newmission.setString(6, mission.getStatus());
+                newmission.executeUpdate();
+                System.out.println("Mission created successfully\n");
 
-        } catch (SQLException e) {
-            System.out.println("Mission creation failed " + e.getMessage() + "\n");
-            e.printStackTrace();
+            } catch (SQLException e) {
+                System.out.println("Mission creation failed " + e.getMessage() + "\n");
+                e.printStackTrace();
+            }
+            validMission = true;
+        } else {
+            System.out.println("Mission's information invalid\n");
         }
+        return validMission;
     }
     public static List<Mission> getMissionsForClient(Client client) {
         // Create a list to store Mission objects retrieved from the database

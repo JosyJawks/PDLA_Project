@@ -59,7 +59,13 @@ public class UserController {
 		String[] UserData = SignUpApp.getFinal();
 		System.out.println(Arrays.toString(UserData));
 		// Check if UserData is not null and has the expected length
-		if (UserData != null && UserData.length == 6 && UserData[5].equals(UserData[4])) {
+		if (UserData != null && UserData.length == 6 && UserData[5].equals(UserData[4])
+				&& !UserData[0].equals("")
+				&& !UserData[1].equals("")
+				&& !UserData[2].equals("")
+				&& !UserData[3].equals("")
+				&& !UserData[4].equals("")
+				&& !UserData[5].equals("")) {
 			// Create user with data
 			User U = createUser(UserData[0], UserData[1], UserData[2], UserData[4], UserData[3]);
 
@@ -89,6 +95,14 @@ public class UserController {
 			}
 			access = true;
 		} else {
+			if(UserData[0].equals("")
+					|| UserData[1].equals("")
+					|| UserData[2].equals("")
+					|| UserData[3].equals("")
+					|| UserData[4].equals("")
+					|| UserData[5].equals("")) {
+
+			}
 			if(UserData != null && !UserData[5].equals(UserData[4])){
 				System.out.println("Confirmed password does not correspond to given password.\n");
 			}
@@ -98,7 +112,9 @@ public class UserController {
 	}
 
 
-	public static void SignIn() {
+	public static boolean SignIn() {
+
+		boolean correctInfo = false;
 
 		// Get Array of data from interface
 		String[] UserData = SignInApp.getFinal();
@@ -130,6 +146,7 @@ public class UserController {
 					String typeCli = "Client";
 					connectedClient = createClient(nameCli,surnameCli,emailCli,pwdCli,typeCli);
 					System.out.println("Connected as " + connectedClient.getName() + " " + connectedClient.getSurname() + " - " + connectedClient.getType() + "\n");
+					correctInfo = true;
 					ClientApp cliApp = new ClientApp(connectedClient);
 					cliApp.setVisible(true);
 				} else if ("Volunteer".equalsIgnoreCase(resultSet.getString("type"))) {
@@ -140,6 +157,7 @@ public class UserController {
 					String typeVolunt = "Volunteer";
 					connectedVolunteer = createVolunteer(nameVolunt,surnameVolunt,emailVolunt,pwdVolunt,typeVolunt);
 					System.out.println("Connected as " + connectedVolunteer.getName() + " " + connectedVolunteer.getSurname() + " - " + connectedVolunteer.getType() + "\n");
+					correctInfo = true;
 					VolunteerApp volApp = new VolunteerApp(connectedVolunteer);
 					volApp.setVisible(true);
 				}
@@ -151,6 +169,7 @@ public class UserController {
 			System.out.println("Sign in failed " + e.getMessage() + "\n");
 			e.printStackTrace();
 		}
+		return correctInfo;
 	}
 
 	public static Client getConnectedClient() {
