@@ -15,7 +15,7 @@ public class MissionController {
 
     public static void saveMission(Mission mission) {
         // SQL query to insert mission details into the "Missions" table
-        String sql = "INSERT INTO Missions (client, objective, location, missionDate, creationDate, status) VALUES (?,?,?,?,?,?);";
+        String sql = "INSERT IGNORE INTO Missions (client, objective, location, missionDate, creationDate, status) VALUES (?,?,?,?,?,?);";
 
         Connection con = Database.Connect();
 

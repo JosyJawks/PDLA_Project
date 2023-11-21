@@ -23,6 +23,4 @@ public class DatabaseTest {
             fail("Exception thrown while testing database connection");
         }
     }
-
-    // Add additional test methods for other functionalities of the Database class
 }

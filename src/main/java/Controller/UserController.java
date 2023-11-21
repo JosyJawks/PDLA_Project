@@ -53,12 +53,13 @@ public class UserController {
 		return V;
 	}
 
-	public static void SignUp() {
+	public static boolean SignUp() {
+		boolean access = false;
 		// Get Array of data from interface
 		String[] UserData = SignUpApp.getFinal();
 		System.out.println(Arrays.toString(UserData));
 		// Check if UserData is not null and has the expected length
-		if (UserData != null && UserData.length == 6) {
+		if (UserData != null && UserData.length == 6 && UserData[5].equals(UserData[4])) {
 			// Create user with data
 			User U = createUser(UserData[0], UserData[1], UserData[2], UserData[4], UserData[3]);
 
@@ -69,7 +70,7 @@ public class UserController {
 			String password = U.getPassword();
 
 			// Addition to database
-			String sql = "INSERT INTO Users (name, surname, email, password, type) VALUES (?,?,?,?,?);";
+			String sql = "INSERT IGNORE INTO Users (name, surname, email, password, type) VALUES (?,?,?,?,?);";
 
 			Connection con = Database.Connect();
 
@@ -86,9 +87,14 @@ public class UserController {
 				System.out.println("Account creation failed " + e.getMessage() + "\n");
 				e.printStackTrace();
 			}
+			access = true;
 		} else {
+			if(UserData != null && !UserData[5].equals(UserData[4])){
+				System.out.println("Confirmed password does not correspond to given password.\n");
+			}
 			System.out.println("Invalid user data. Sign up failed.\n");
 		}
+		return access;
 	}
 
 

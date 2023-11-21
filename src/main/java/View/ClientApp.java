@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class ClientApp extends JFrame {
+public class ClientApp extends JPanel {
 
     private final List<Mission> missionList;
     private final JPanel missionsPanel;

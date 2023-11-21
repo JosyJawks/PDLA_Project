@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Enumeration;
 
-public class SignUpApp extends JFrame{
+public class SignUpApp extends JPanel{
 
     private static String[] Final;
     private final JTextField nameTextField;
@@ -60,12 +60,15 @@ public class SignUpApp extends JFrame{
         //creation of the sign-up button
         JButton signUpButton = new JButton("Sign Up");
         signUpButton.addActionListener(e -> {
+            boolean access;
             typeTextField = getType(groupType);
             Final = creerSignUp();
-            UserController.SignUp();
-            frame.setVisible(false);
-            SignInApp signInApp = new SignInApp();
-            signInApp.setVisible(true);
+            access = UserController.SignUp();
+            if(access) {
+                frame.setVisible(false);
+                SignInApp signInApp = new SignInApp();
+                signInApp.setVisible(true);
+            }
         });
 
         // Create a panel for the button and center it
