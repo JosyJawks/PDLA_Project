@@ -81,12 +81,6 @@ public class Database {
 		}
 	}
 
-	//main for the creation of the database (executed 1 time at the beginning of the project)
-	/*
-	public static void main(String[] args) {
-		createUserTable();
-		createMissionTable();
-	}
-	*/
+
 
 }
