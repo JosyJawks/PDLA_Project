@@ -1,13 +1,13 @@
 package Model;
 
 public class User {
-    //test
     private String name;
     private String surname;
     private String email;
     private String password;
     private String type;
 
+    // Getters and setters for the user class : the name, surname, password, type (volunteer or client)
     public String getName() {
     	return this.name;
     }

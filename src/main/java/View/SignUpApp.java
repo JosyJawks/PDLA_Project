@@ -17,15 +17,17 @@ public class SignUpApp extends JFrame{
     private final JPasswordField confirmPasswordField;
 
     public SignUpApp(){
-
+        // Create a new JFrame for the SignUpApp
         JFrame frame = new JFrame("Sign Up");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);
         frame.setLocationRelativeTo(null); // Center the frame on the screen
 
+        // Create a panel for organizing components with GridLayout
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(8, 2));
 
+        // Labels and text fields for sign up details
         JLabel nameLabel = new JLabel("Name:");
         nameTextField = new JTextField();
 
@@ -37,10 +39,12 @@ public class SignUpApp extends JFrame{
 
         JLabel typeLabel = new JLabel("Type:");
 
+        //create radios button to select if the user is a client or a volunteer
         JPanel panelType = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JRadioButton clientRadioButton = new JRadioButton("Client", true);
         JRadioButton volunteerRadioButton = new JRadioButton("Volunteer", false);
 
+        //button group with the 2 radios button to be able to select only one at a time
         ButtonGroup groupType = new ButtonGroup();
         groupType.add(clientRadioButton);
         groupType.add(volunteerRadioButton);
@@ -53,6 +57,7 @@ public class SignUpApp extends JFrame{
         JLabel confirmPasswordLabel = new JLabel("Confirm Password:");
         confirmPasswordField = new JPasswordField();
 
+        //creation of the sign-up button
         JButton signUpButton = new JButton("Sign Up");
         signUpButton.addActionListener(e -> {
             typeTextField = getType(groupType);
@@ -67,6 +72,7 @@ public class SignUpApp extends JFrame{
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.add(signUpButton);
 
+        // Add components to the panel
         panel.add(nameLabel);
         panel.add(nameTextField);
         panel.add(surnameLabel);
@@ -83,13 +89,16 @@ public class SignUpApp extends JFrame{
         panel.add(new JLabel()); // Empty label for spacing
         panel.add(buttonPanel);
 
+        // Add the panel to the JFrame
         frame.add(panel);
         frame.setVisible(true);
     }
 
+    //set the final information from the interface
     public static void setFinal(String[] finalData) {
         Final = finalData;
     }
+    //get the information of the 2 radios button to return the type : Client or Volunteer
     private String getType(ButtonGroup groupType) {
         for (Enumeration<AbstractButton> buttons = groupType.getElements(); buttons.hasMoreElements();) {
             AbstractButton button = buttons.nextElement();
@@ -100,6 +109,7 @@ public class SignUpApp extends JFrame{
         return null;
     }
 
+    //return all the information from the interface
     private String[] creerSignUp() {
         String name = nameTextField.getText();
         String surname = surnameTextField.getText();
@@ -113,6 +123,7 @@ public class SignUpApp extends JFrame{
     }
 
 
+    //return the final information
     public static String[] getFinal() {
         return Final;
     }

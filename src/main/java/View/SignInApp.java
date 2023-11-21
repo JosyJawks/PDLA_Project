@@ -12,20 +12,24 @@ public class SignInApp extends JFrame {
     private final JPasswordField passwordField;
 
     public SignInApp() {
+        // Create a new JFrame for the SignInApp
         JFrame frame = new JFrame("Sign In");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 200);
         frame.setLocationRelativeTo(null); // Center the frame on the screen
 
+        // Create a panel for organizing components with GridLayout
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(3, 2));
 
+        // Labels and text fields for sign in details
         JLabel emailLabel = new JLabel("Email:");
         emailTextField = new JTextField();
 
         JLabel passwordLabel = new JLabel("Password:");
         passwordField = new JPasswordField();
 
+        //Creation of the SignIn button
         JButton signInButton = new JButton("Sign In");
         signInButton.addActionListener(e -> {
             Final = creerSignIn();
@@ -33,6 +37,7 @@ public class SignInApp extends JFrame {
             frame.setVisible(false);
         });
 
+        //Creation of the SignUp button
         JButton signUpButton = new JButton("Sign Up");
         signUpButton.addActionListener(e -> {
             frame.setVisible(false);
@@ -47,6 +52,7 @@ public class SignInApp extends JFrame {
         signInbuttonPanel.add(signInButton);
         signUpbuttonPanel.add(signUpButton);
 
+        // Add components to the panel
         panel.add(emailLabel);
         panel.add(emailTextField);
         panel.add(passwordLabel);
@@ -55,10 +61,12 @@ public class SignInApp extends JFrame {
         panel.add(signUpbuttonPanel);
         panel.add(signInbuttonPanel);
 
+        // Add the panel to the JFrame
         frame.add(panel);
         frame.setVisible(true);
     }
 
+    // Method to create a string with entered details
     private String[] creerSignIn() {
         String email = emailTextField.getText();
         char[] passwordChars = passwordField.getPassword();
@@ -66,13 +74,16 @@ public class SignInApp extends JFrame {
         return new String[]{email, password};
     }
 
+    //main of the application
     public static void main(String[] args) {
         SwingUtilities.invokeLater(SignInApp::new);
     }
 
+    //return the final information
     public static String[] getFinal() {
         return Final;
     }
+    //set the final information with information from the interface
     public static void setFinal(String[] finalData) {
         Final = finalData;
     }

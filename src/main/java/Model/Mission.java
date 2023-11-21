@@ -11,7 +11,8 @@ public class Mission {
     private String status;
 
 
-    // Getters and setters
+    // Getters and setters for the client associated with the mission, the location,
+    // the date of the mission, the date of the creation of the mission, the objective and the status of the mission
     public Client getClient(){ return client; }
 
     public void setClient(Client cli) { this.client = cli; }

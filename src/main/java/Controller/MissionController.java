@@ -133,7 +133,9 @@ public class MissionController {
         return nameList;
     }
 
+    //Update missions status in the database
     public static void changeMissionStatus(Mission mission, String name, String status) {
+        //Get the mission data
         String location = mission.getLocation();
         String dateMission = mission.getDateMission();
         String objective = mission.getObjective();
@@ -144,7 +146,7 @@ public class MissionController {
                 "WHERE client = ? AND objective = ? AND location = ? AND missionDate = ? AND creationDate = ?;";
 
         Connection con = Database.Connect();
-
+        //connection to the database and update with new data
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1,status);
             pstmt.setString(2, name);
