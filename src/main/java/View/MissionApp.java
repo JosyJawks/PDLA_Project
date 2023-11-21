@@ -9,7 +9,7 @@ import java.awt.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MissionApp extends JFrame {
+public class MissionApp extends JPanel {
 
     private final JTextField objectiveTextField;
     private final JTextField lieuTextField;
