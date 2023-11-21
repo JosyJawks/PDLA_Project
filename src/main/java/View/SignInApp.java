@@ -74,11 +74,6 @@ public class SignInApp extends JFrame {
         return new String[]{email, password};
     }
 
-    //main of the application
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(SignInApp::new);
-    }
-
     //return the final information
     public static String[] getFinal() {
         return Final;
