@@ -3,6 +3,7 @@ package View;
 import Controller.MissionController;
 import Model.Client;
 import Model.Mission;
+import Model.Volunteer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -79,6 +80,9 @@ public class MissionApp extends JPanel {
 
     // Method to create a new Mission object with entered details
     private Mission createMission(Client client) {
+        Volunteer v = new Volunteer();
+        v.setName("");
+        v.setSurname("");
         Mission mission = new Mission();
         mission.setStatus("Pending");
         mission.setDateCreation(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
@@ -86,6 +90,7 @@ public class MissionApp extends JPanel {
         mission.setLocation(lieuTextField.getText());
         mission.setObjective(objectiveTextField.getText());
         mission.setClient(client);
+        mission.setVolunteer(v);
         return mission;
     }
 }

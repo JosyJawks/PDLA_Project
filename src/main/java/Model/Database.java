@@ -62,6 +62,7 @@ public class Database {
 			String sql = "CREATE TABLE IF NOT EXISTS Missions (\n"
 					+ "		id int AUTO_INCREMENT PRIMARY KEY, \n"
 					+ "     client text NOT NULL, \n"
+					+ "     volunteer text NOT NULL \n"
 					+ "		objective text NOT NULL, \n"
 					+ "		location text NOT NULL, \n"
 					+ "     missionDate text NOT NULL, \n"

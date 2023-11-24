@@ -4,6 +4,7 @@ package Controller;
 import Model.Client;
 import Model.Database;
 import Model.Mission;
+import Model.Volunteer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,6 +25,8 @@ public class MissionControllerTest {
 
     private static Mission testMission;
     private static Client testClient;
+
+    private static Volunteer testVol;
 
     @BeforeAll
     public static void setUpBeforeClass() {
@@ -126,11 +129,13 @@ public class MissionControllerTest {
         MissionController.saveMission(testMission);
 
         // Change the status of the mission
-        MissionController.changeMissionStatus(testMission, testClient.getName() + " " + testClient.getSurname(), "Confirmed");
+        MissionController.changeMissionStatusConfirmed(testMission, testClient.getName() + " " + testClient.getSurname(), "Confirmed", testVol.getName() + " " + testVol.getSurname() );
 
         // Retrieve the mission to check if the status is changed
-        try (PreparedStatement pstmt = testConnection.prepareStatement("SELECT * FROM Missions WHERE client = ?")) {
+        try (PreparedStatement pstmt = testConnection.prepareStatement("SELECT * FROM Missions WHERE client = ? AND volunteer = ?")) {
             pstmt.setString(1, testClient.getName() + " " + testClient.getSurname());
+            pstmt.setString(2, testVol.getName() + " " + testVol.getSurname());
+
             ResultSet resultSet = pstmt.executeQuery();
             assertTrue(resultSet.next());
         } catch (SQLException e) {

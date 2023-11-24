@@ -17,18 +17,19 @@ public class MissionController {
         boolean validMission = false;
         if (!mission.getDateMission().equals("") && !mission.getLocation().equals("") && !mission.getObjective().equals("") ) {
             // SQL query to insert mission details into the "Missions" table
-            String sql = "INSERT IGNORE INTO Missions (client, objective, location, missionDate, creationDate, status) VALUES (?,?,?,?,?,?);";
+            String sql = "INSERT IGNORE INTO Missions (client, volunteer, objective, location, missionDate, creationDate, status) VALUES (?,?,?,?,?,?);";
 
             Connection con = Database.Connect();
 
             try (PreparedStatement newmission = con.prepareStatement(sql)) {
                 // Set parameters in the prepared statement with mission details
                 newmission.setString(1, mission.getClient().getName() + " " + mission.getClient().getSurname());
-                newmission.setString(2, mission.getObjective());
-                newmission.setString(3, mission.getLocation());
-                newmission.setString(4, mission.getDateMission());
-                newmission.setString(5, mission.getDateCreation());
-                newmission.setString(6, mission.getStatus());
+                newmission.setString(2, mission.getVolunteer().getName() + " " + mission.getVolunteer().getSurname());
+                newmission.setString(3, mission.getObjective());
+                newmission.setString(4, mission.getLocation());
+                newmission.setString(5, mission.getDateMission());
+                newmission.setString(6, mission.getDateCreation());
+                newmission.setString(7, mission.getStatus());
                 newmission.executeUpdate();
                 System.out.println("Mission created successfully\n");
 
@@ -141,7 +142,7 @@ public class MissionController {
     }
 
     //Update missions status in the database
-    public static void changeMissionStatus(Mission mission, String name, String status) {
+    public static void changeMissionStatusPending(Mission mission, String nameclient, String status, String namevol) {
         //Get the mission data
         String location = mission.getLocation();
         String dateMission = mission.getDateMission();
@@ -150,22 +151,58 @@ public class MissionController {
 
         String sql = "UPDATE Missions " +
                 "SET Status = ? " +
-                "WHERE client = ? AND objective = ? AND location = ? AND missionDate = ? AND creationDate = ?;";
+                "WHERE client = ? AND volunteer = ? AND objective = ? AND location = ? AND missionDate = ? AND creationDate = ?;";
 
         Connection con = Database.Connect();
         //connection to the database and update with new data
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1,status);
-            pstmt.setString(2, name);
-            pstmt.setString(3, objective);
-            pstmt.setString(4, location);
-            pstmt.setString(5, dateMission);
-            pstmt.setString(6, dateCreation);
-            pstmt.executeUpdate();
+            pstmt.setString(2, nameclient);
+            pstmt.setString(3, "NULL");
+            pstmt.setString(4, objective);
+            pstmt.setString(5, location);
+            pstmt.setString(6, dateMission);
+            pstmt.setString(7, dateCreation);
+            if ((mission.getVolunteer().getName()+ " " +mission.getVolunteer().getSurname()).equals(namevol)) {
+                pstmt.executeUpdate();
+            }
         } catch (SQLException e) {
             System.out.println("Mission status update failed\n");
             e.printStackTrace();
         }
+    }
+
+
+    public static void changeMissionStatusConfirmed(Mission mission, String nameclient, String status, String namevol) {
+        //Get the mission data
+        String location = mission.getLocation();
+        String dateMission = mission.getDateMission();
+        String objective = mission.getObjective();
+        String dateCreation = mission.getDateCreation();
+
+        String sql = "UPDATE Missions " +
+                "SET Status = ? " +
+                "WHERE client = ? AND volunteer = ? AND objective = ? AND location = ? AND missionDate = ? AND creationDate = ?;";
+
+        Connection con = Database.Connect();
+        //connection to the database and update with new data
+
+            try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+                pstmt.setString(1, status);
+                pstmt.setString(2, nameclient);
+                pstmt.setString(3, namevol);
+                pstmt.setString(4, objective);
+                pstmt.setString(5, location);
+                pstmt.setString(6, dateMission);
+                pstmt.setString(7, dateCreation);
+                if (mission.getVolunteer().getName().equals("NULL")) {
+                    pstmt.executeUpdate();
+                }
+            } catch (SQLException e) {
+                System.out.println("Mission status update failed\n");
+                e.printStackTrace();
+            }
+
     }
 
 }

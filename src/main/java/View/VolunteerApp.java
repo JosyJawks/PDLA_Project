@@ -39,7 +39,7 @@ public class VolunteerApp extends JPanel implements ListSelectionListener{
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        // Create a label to display the client's name and surname
+        // Create a label to display the volunteer's name and surname
         JLabel nameLabel = new JLabel("Volunteer : " + v.getName() + " " + v.getSurname());
 
         // Load missions from the database for the client
@@ -61,11 +61,11 @@ public class VolunteerApp extends JPanel implements ListSelectionListener{
         // Create buttons for accepting and cancelling missions
         acceptButton = new JButton("Accept");
         acceptButton.setActionCommand("Accept"); // Initially disabled
-        acceptButton.addActionListener(new acceptMission());
+        acceptButton.addActionListener(new acceptMission(v));
 
         cancelButton = new JButton("Cancel");
         cancelButton.setEnabled(false); // Initially disabled
-        cancelButton.addActionListener(new cancelMission());
+        cancelButton.addActionListener(new cancelMission(v));
 
         // Create a panel for buttons
         JPanel buttonPanel = new JPanel();
@@ -87,6 +87,11 @@ public class VolunteerApp extends JPanel implements ListSelectionListener{
     //Class called when acceptButton is used
     class acceptMission implements ActionListener {
         //Action performed when acceptButton is used
+        Volunteer v;
+        public acceptMission(Volunteer v)
+        {
+            this.v=v;
+        }
         public void actionPerformed(ActionEvent e) {
             // Index of the selected mission on the interface
             int index = missionList.getSelectedIndex();
@@ -108,7 +113,7 @@ public class VolunteerApp extends JPanel implements ListSelectionListener{
                 missionList.ensureIndexIsVisible(index);
 
                 // Update the mission status in SQL database from Pending to Confirmed
-                MissionController.changeMissionStatus(selectedMission, selectedClient,"Confirmed");
+                MissionController.changeMissionStatusConfirmed(selectedMission, selectedClient, v.getName()+ " " +v.getSurname(),"Confirmed");
 
                 // Update the displayed list on the interface
                 updateMission();
@@ -118,6 +123,12 @@ public class VolunteerApp extends JPanel implements ListSelectionListener{
 
     //Class called when cancelButton is used
     class cancelMission implements ActionListener {
+
+        Volunteer v;
+        public cancelMission(Volunteer v)
+        {
+            this.v=v;
+        }
         //Action performed when cancelButton is used
         public void actionPerformed(ActionEvent e) {
             // Index of the selected mission on the interface
@@ -140,7 +151,7 @@ public class VolunteerApp extends JPanel implements ListSelectionListener{
                 missionList.ensureIndexIsVisible(index);
 
                 // Update the mission status in SQL database from Confirmed to Pending
-                MissionController.changeMissionStatus(selectedMission, selectedClient,"Pending");
+                MissionController.changeMissionStatusPending(selectedMission, selectedClient, v.getName()+ " " +v.getSurname(),"Pending");
 
                 // Update the displayed list on the interface
                 updateMission();
