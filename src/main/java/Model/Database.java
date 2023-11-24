@@ -60,15 +60,21 @@ public class Database {
 		try(Statement stmt = con.createStatement())
 		{
 			String sql = "CREATE TABLE IF NOT EXISTS Missions (\n"
-					+ "		id int AUTO_INCREMENT PRIMARY KEY, \n"
-					+ "     client text NOT NULL, \n"
-					+ "     volunteer text NOT NULL \n"
-					+ "		objective text NOT NULL, \n"
-					+ "		location text NOT NULL, \n"
-					+ "     missionDate text NOT NULL, \n"
-					+ "     creationDate text NOT NULL, \n"
-					+ "		status text NOT NULL\n"
+					+ "    id INT AUTO_INCREMENT PRIMARY KEY, \n"
+					+ "    clientID INT NOT NULL, \n"
+					+ "    volunteerID INT, \n"
+					+ "    objective TEXT NOT NULL, \n"
+					+ "    location TEXT NOT NULL, \n"
+					+ "    missionDate TEXT NOT NULL, \n"
+					+ "    creationDate TEXT NOT NULL, \n"
+					+ "    status TEXT NOT NULL, \n"
+					+ "    FOREIGN KEY (clientID) REFERENCES Users(id), \n"
+					+ "    FOREIGN KEY (volunteerID) REFERENCES Users(id), \n"
+					+ "    CONSTRAINT check_client_type CHECK (clientID IS NOT NULL), \n"
+					+ "    CONSTRAINT check_volunteer_type CHECK (volunteerID IS NOT NULL)\n"
 					+ ");";
+
+
 			stmt.executeUpdate(sql);
 			System.out.println("Missions table created successfully\n");
 		} catch (SQLException e) {
@@ -82,6 +88,10 @@ public class Database {
 		}
 	}
 
+	public static void main(String[] args) {
 
+		createMissionTable();
+		//SwingUtilities.invokeLater(SignInApp::new);
+	}
 
 }
