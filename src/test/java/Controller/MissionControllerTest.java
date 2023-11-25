@@ -38,10 +38,9 @@ public class MissionControllerTest {
                 "WHERE clientID = 57 " +
                 "AND objective = 'Test Objective' " +
                 "AND location = 'Test Location' " +
-                "AND missionDate = '2023-11-20' " +
-                "AND creationDate = '2023-11-19';")) {
+                "AND missionDate = '20-11-2023' " +
+                "AND creationDate = '19-11-2023';")) {
             pstmt.executeUpdate();
-            testConnection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

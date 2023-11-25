@@ -59,13 +59,7 @@ public class UserController {
 		String[] UserData = SignUpApp.getFinal();
 		System.out.println(Arrays.toString(UserData));
 		// Check if UserData is not null and has the expected length
-		if (UserData != null && UserData.length == 6 && UserData[5].equals(UserData[4])
-				&& !UserData[0].equals("")
-				&& !UserData[1].equals("")
-				&& !UserData[2].equals("")
-				&& !UserData[3].equals("")
-				&& !UserData[4].equals("")
-				&& !UserData[5].equals("")) {
+		if (UserData != null && UserData.length == 6 && UserData[5].equals(UserData[4]) && !UserData[0].equals("") && !UserData[1].equals("") && !UserData[2].equals("") && !UserData[3].equals("") && !UserData[4].equals("")) {
 			// Create user with data
 			User U = createUser(UserData[0], UserData[1], UserData[2], UserData[4], UserData[3]);
 
@@ -93,17 +87,15 @@ public class UserController {
 				System.out.println("Account creation failed " + e.getMessage() + "\n");
 				e.printStackTrace();
 			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 			access = true;
 		} else {
-			if(UserData[0].equals("")
-					|| UserData[1].equals("")
-					|| UserData[2].equals("")
-					|| UserData[3].equals("")
-					|| UserData[4].equals("")
-					|| UserData[5].equals("")) {
-
-			}
-			if(UserData != null && !UserData[5].equals(UserData[4])){
+			assert UserData != null;
+			if(!UserData[5].equals(UserData[4])){
 				System.out.println("Confirmed password does not correspond to given password.\n");
 			}
 			System.out.println("Invalid user data. Sign up failed.\n");

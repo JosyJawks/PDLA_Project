@@ -35,6 +35,11 @@ public class ClientController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return id;
     }
 
@@ -62,6 +67,11 @@ public class ClientController {
                 cli.setEmail(resultSet.getString("email"));
                 cli.setPassword(resultSet.getString("password"));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

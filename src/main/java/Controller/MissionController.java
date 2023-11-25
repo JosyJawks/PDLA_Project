@@ -41,6 +41,12 @@ public class MissionController {
                 System.out.println("Mission creation failed " + e.getMessage() + "\n");
                 e.printStackTrace();
             }
+
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             validMission = true;
         } else {
             System.out.println("Mission's information invalid\n");
@@ -88,6 +94,11 @@ public class MissionController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        try {
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         // Return the list of Mission objects retrieved from the database
         return missionList;
     }
@@ -129,6 +140,11 @@ public class MissionController {
                 // Add the Mission object to the list
                 missionList.add(mission);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -196,6 +212,11 @@ public class MissionController {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Mission status update failed\n");
+            e.printStackTrace();
+        }
+        try {
+            con.close();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
