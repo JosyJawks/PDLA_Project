@@ -55,10 +55,12 @@ public class VolunteerApp extends JPanel implements ListSelectionListener{
 
         // Create buttons for accepting and cancelling missions
         acceptButton = new JButton("Accept");
-        acceptButton.setActionCommand("Accept"); // Initially disabled
+        acceptButton.setActionCommand("Accept");
+        acceptButton.setEnabled(false);// Initially disabled
         acceptButton.addActionListener(new acceptMission(v));
 
         cancelButton = new JButton("Cancel");
+        cancelButton.setActionCommand("Cancel");
         cancelButton.setEnabled(false); // Initially disabled
         cancelButton.addActionListener(new cancelMission(v));
 
@@ -105,7 +107,7 @@ public class VolunteerApp extends JPanel implements ListSelectionListener{
                 // Highlights the selected mission
                 missionList.ensureIndexIsVisible(index);
 
-                // Update the mission status in SQL database from Pending to Confirmed
+                // Update the mission status in SQL database from Pending to Confirmed, and associate the selected mission to the volunteer
                 MissionController.changeMissionStatusConfirmed(selectedMission,v);
 
                 // Update the displayed list on the interface
@@ -141,7 +143,7 @@ public class VolunteerApp extends JPanel implements ListSelectionListener{
                 // Highlights the selected mission
                 missionList.ensureIndexIsVisible(index);
 
-                // Update the mission status in SQL database from Confirmed to Pending
+                // Update the mission status in SQL database from Confirmed to Pending, and remove the association between the selected mission and the volunteer
                 MissionController.changeMissionStatusPending(selectedMission);
 
                 // Update the displayed list on the interface

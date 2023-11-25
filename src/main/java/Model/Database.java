@@ -13,7 +13,6 @@ public class Database {
 	
        try {
             con = DriverManager.getConnection(url,user,password);
-            System.out.println("Connected successfully to database\n");
             
         }
         catch (SQLException e)
@@ -86,12 +85,6 @@ public class Database {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public static void main(String[] args) {
-
-		createMissionTable();
-		//SwingUtilities.invokeLater(SignInApp::new);
 	}
 
 }

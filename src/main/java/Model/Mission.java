@@ -3,7 +3,6 @@ package Model;
 public class Mission {
 
     private Client client;
-
     private Volunteer volunteer;
     private String location;
     private String dateMission;

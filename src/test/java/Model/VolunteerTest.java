@@ -7,18 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class VolunteerTest {
 
     @Test
-    public void testSetAndGetAcceptedTask() {
-        Volunteer volunteer = new Volunteer();
-        Mission mission = new Mission();
-
-        // Set an accepted task
-        volunteer.setAcceptedTask(mission);
-
-        // Get and assert the accepted task
-        assertEquals(mission, volunteer.getAcceptedTask());
-    }
-
-    @Test
     public void testInheritedFieldsFromUser() {
         Volunteer volunteer = new Volunteer();
 

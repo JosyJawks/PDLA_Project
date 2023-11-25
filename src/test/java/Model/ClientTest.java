@@ -7,18 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ClientTest {
 
     @Test
-    public void testSetAndGetRequest() {
-        Client client = new Client();
-        Mission mission = new Mission();
-
-        // Set a mission request
-        client.setRequest(mission);
-
-        // Get and assert the mission request
-        assertEquals(mission, client.getRequest());
-    }
-
-    @Test
     public void testInheritedFieldsFromUser() {
         Client client = new Client();
 

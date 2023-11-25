@@ -5,6 +5,9 @@ import Model.Mission;
 import Model.Client;
 import Model.Volunteer;
 
+import static Controller.VolunteerController.*;
+import static Controller.ClientController.*;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,113 +15,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class MissionController {
-
-
-    public static int getClientID(Client cli) {
-        int id = -1;
-
-        // Define the SQL query to select missions for a specific client
-        String sql = "SELECT id FROM Users WHERE name = ? AND surname = ? AND email = ? AND password = ? AND type = 'client';";
-
-        Connection con = Database.Connect();
-
-        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-            // Set the client's info as parameters in the SQL query
-            pstmt.setString(1, cli.getName());
-            pstmt.setString(2, cli.getSurname());
-            pstmt.setString(3, cli.getEmail());
-            pstmt.setString(4, cli.getPassword());
-
-            // Execute the SQL query and obtain a ResultSet
-            ResultSet resultSet = pstmt.executeQuery();
-
-            while(resultSet.next()) {
-                id = resultSet.getInt("id");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return id;
-    }
-
-    public static Client getClientInfo(int id) {
-        Client cli = new Client();
-
-        String sql = "SELECT * FROM Users WHERE id = ?;";
-
-        Connection con = Database.Connect();
-
-        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-            //Get volunteer info from table Users
-            pstmt.setInt(1, id);
-
-            ResultSet resultSet = pstmt.executeQuery();
-
-            while (resultSet.next()) {
-                cli.setName(resultSet.getString("name"));
-                cli.setSurname(resultSet.getString("surname"));
-                cli.setEmail(resultSet.getString("email"));
-                cli.setPassword(resultSet.getString("password"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return cli;
-    }
-
-    public static int getVolunteerID(Volunteer vol) {
-        int id = -1;
-
-        // Define the SQL query to select missions for a specific client
-        String sql = "SELECT id FROM Users WHERE name = ? AND surname = ? AND email = ? AND password = ? AND type = 'volunteer';";
-
-        Connection con = Database.Connect();
-
-        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-            // Set the client's info as parameters in the SQL query
-            pstmt.setString(1, vol.getName());
-            pstmt.setString(2, vol.getSurname());
-            pstmt.setString(3, vol.getEmail());
-            pstmt.setString(4, vol.getPassword());
-
-            // Execute the SQL query and obtain a ResultSet
-            ResultSet resultSet = pstmt.executeQuery();
-
-            while(resultSet.next()) {
-                id = resultSet.getInt("id");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return id;
-    }
-
-    public static Volunteer getVolunteerInfo(int id) {
-        Volunteer vol = new Volunteer();
-
-        String sql = "SELECT * FROM Users WHERE id = ?;";
-
-        Connection con = Database.Connect();
-
-        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-            //Get volunteer info from table Users
-            pstmt.setInt(1, id);
-
-            ResultSet resultSet = pstmt.executeQuery();
-
-            while (resultSet.next()) {
-                vol.setName(resultSet.getString("name"));
-                vol.setSurname(resultSet.getString("surname"));
-                vol.setEmail(resultSet.getString("email"));
-                vol.setPassword(resultSet.getString("password"));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return vol;
-    }
 
     public static boolean saveMission(Mission mission) {
         boolean validMission = false;
@@ -147,6 +45,7 @@ public class MissionController {
         } else {
             System.out.println("Mission's information invalid\n");
         }
+        // Return a boolean to continue (or not) action performed from Create Mission button
         return validMission;
     }
 
@@ -156,10 +55,11 @@ public class MissionController {
 
         Connection con = Database.Connect();
 
+        // Define the SQL query to select all Missions related to the client's ID
         String sql1 = "SELECT * FROM Missions WHERE clientID = ?;";
 
         try (PreparedStatement pstmt = con.prepareStatement(sql1)) {
-            //Get clientID from table Users
+            //Get clientID from table "Users"
             pstmt.setInt(1, getClientID(client));
             ResultSet resultSet = pstmt.executeQuery();
             // Iterate through the ResultSet to retrieve mission details
@@ -192,16 +92,18 @@ public class MissionController {
         return missionList;
     }
 
+
     public static List<Mission> getMissionsForVolunteer(Volunteer volunteer) {
         // Create a list to store Mission objects retrieved from the database
         List<Mission> missionList = new ArrayList<>();
 
-        // Define the SQL query to select missions for a specific client
+        // Define the SQL query to select pending missions or missions confirmed by the connected volunteer
         String sql = "SELECT * FROM Missions WHERE status = 'Pending' OR (volunteerID = ? AND status = 'Confirmed');";
 
         Connection con = Database.Connect();
 
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            // Get volunteerID from table "Users"
             pstmt.setInt(1,getVolunteerID(volunteer));
             // Execute the SQL query and obtain a ResultSet
             ResultSet resultSet = pstmt.executeQuery();
@@ -234,36 +136,10 @@ public class MissionController {
         return missionList;
     }
 
-    public static List<String> getNamesForVolunteer() {
-        // Create a list to store names retrieved from the database
-        List<String> nameList = new ArrayList<>();
-
-        // Define the SQL query to select missions for a specific client
-        String sql = "SELECT client FROM Missions WHERE status = ? OR status = ?";
-
-        Connection con = Database.Connect();
-
-        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setString(1,"Pending");
-            pstmt.setString(2,"Confirmed");
-            // Execute the SQL query and obtain a ResultSet
-            ResultSet resultSet = pstmt.executeQuery();
-
-            // Iterate through the ResultSet to retrieve mission details
-            while (resultSet.next()) {
-                // Add the names to the list
-                nameList.add(resultSet.getString("client"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        // Return the list of Mission objects retrieved from the database
-        return nameList;
-    }
 
     //Update missions status in the database
     public static void changeMissionStatusPending(Mission mission) {
-        //Get the mission data
+        //Get the mission's data
         Client cli = mission.getClient();
         Volunteer vol = mission.getVolunteer();
         String location = mission.getLocation();
@@ -271,12 +147,13 @@ public class MissionController {
         String objective = mission.getObjective();
         String dateCreation = mission.getDateCreation();
 
+        // Define SQL query to update the selected mission's status to Pending and volunteerID to NULL in table "Missions"
         String sql = "UPDATE Missions " +
                 "SET status = 'Pending', volunteerID = NULL " +
                 "WHERE clientID = ? AND volunteerID = ? AND objective = ? AND location = ? AND missionDate = ? AND creationDate = ?;";
 
         Connection con = Database.Connect();
-        //connection to the database and update with new data
+        // Connection to the database and update with new data
         try (PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setInt(1,getClientID(cli));
             pstmt.setInt(2, getVolunteerID(vol));
@@ -301,27 +178,25 @@ public class MissionController {
         String objective = mission.getObjective();
         String dateCreation = mission.getDateCreation();
 
+        // Define SQL query to update the selected mission's status to Confirmed and associate volunteerID to the connected volunteer's ID in table "Missions"
         String sql = "UPDATE Missions " +
                 "SET status = 'Confirmed', volunteerID = ? " +
                 "WHERE clientID = ? AND objective = ? AND location = ? AND missionDate = ? AND creationDate = ?;";
 
         Connection con = Database.Connect();
-        //connection to the database and update with new data
+        // Connection to the database and update with new data
+        try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(1, getVolunteerID(vol));
+            pstmt.setInt(2, getClientID(cli));
+            pstmt.setString(3, objective);
+            pstmt.setString(4, location);
+            pstmt.setString(5, dateMission);
+            pstmt.setString(6, dateCreation);
 
-            try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-                pstmt.setInt(1, getVolunteerID(vol));
-                pstmt.setInt(2, getClientID(cli));
-                pstmt.setString(3, objective);
-                pstmt.setString(4, location);
-                pstmt.setString(5, dateMission);
-                pstmt.setString(6, dateCreation);
-
-                pstmt.executeUpdate();
-            } catch (SQLException e) {
-                System.out.println("Mission status update failed\n");
-                e.printStackTrace();
-            }
-
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Mission status update failed\n");
+            e.printStackTrace();
+        }
     }
-
 }
