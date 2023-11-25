@@ -94,11 +94,6 @@ public class MissionController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        try {
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         // Return the list of Mission objects retrieved from the database
         return missionList;
     }

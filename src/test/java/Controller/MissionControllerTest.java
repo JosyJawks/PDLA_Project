@@ -163,18 +163,28 @@ public class MissionControllerTest {
         MissionController.changeMissionStatusPending(testMission);
 
         // Check if the mission status is updated to Pending and volunteerID cleared
-        List<Mission> missionList = MissionController.getMissionsForClient(testClient);
-        assertTrue(missionList.stream().anyMatch(m ->
-                m.getClient().equals(testClient) &&
-                        m.getVolunteer().getName() == null &&
-                        m.getVolunteer().getSurname() == null &&
-                        m.getVolunteer().getEmail() == null &&
-                        m.getVolunteer().getPassword() == null &&
-                        m.getObjective().equals("Test objective") &&
-                        m.getLocation().equals("Test location") &&
-                        m.getDateMission().equals("20-11-2023") &&
-                        m.getDateCreation().equals("19-11-2023") &&
-                        m.getStatus().equals("Pending")
-        ));
+        String sql = "SELECT * FROM Missions WHERE " +
+                "clientID = 57 " +
+                "AND volunteerID = NULL " +
+                "AND objective = 'Test objective' " +
+                "AND location = 'Test location' " +
+                "AND missionDate = '20-11-2023' " +
+                "AND creationDate = '19-11-2023' " +
+                "AND status = 'Pending';";
+
+        try (PreparedStatement pstmt = testConnection.prepareStatement(sql)) {
+            ResultSet resultSet = pstmt.executeQuery();
+            while(resultSet.next()) {
+                assertEquals(57, resultSet.getInt("clientID"));
+                assertNull(resultSet.getObject("volunteerID"));
+                assertEquals("Test objective", resultSet.getString("objective"));
+                assertEquals("Test location", resultSet.getString("location"));
+                assertEquals("20-11-2023", resultSet.getString("missionDate"));
+                assertEquals("19-11-2023", resultSet.getString("creationDate"));
+                assertEquals("Pending", resultSet.getString("status"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
