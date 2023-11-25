@@ -6,6 +6,7 @@ import Model.Mission;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
 import java.util.List;
 
 public class ClientApp extends JPanel {
@@ -14,7 +15,7 @@ public class ClientApp extends JPanel {
     private final JPanel missionsPanel;
     private final JFrame frame;
 
-    public ClientApp(Client c) {
+    public ClientApp(Client c) throws SQLException {
         // Initialize the main JFrame
         frame = new JFrame("Client Interface");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
